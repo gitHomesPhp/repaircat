@@ -28,5 +28,6 @@ func main() {
 
 	r := gin.Default()
 	r.GET("/ping", controllers.PongController)
+	r.GET("/sc/:id", controllers.GetSC)
 	r.Run()
 }
