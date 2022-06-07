@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func getScList(c *gin.Context) {
+func GetScList(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"hui": "pui",
 	})
