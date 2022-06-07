@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS repaircat.public.sc (
+    sc_id BIGSERIAL PRIMARY KEY,
+    name VARCHAR( 50 ) UNIQUE NOT NULL
+);
