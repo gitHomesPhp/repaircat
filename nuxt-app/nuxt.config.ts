@@ -2,7 +2,8 @@ import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
     css: [
-        'assets/css/reset.css'
+        'assets/css/reset.css',
+        'assets/css/global.css'
     ],
     scss: {
         implementation: require('sass'),

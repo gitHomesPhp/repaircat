@@ -28,7 +28,6 @@
 
 <script setup lang="ts">
   const config = useRuntimeConfig()
-
   const sc = ref({
     name: '',
     description: '',
@@ -48,7 +47,15 @@
     await $fetch(config.API + '/sc', {
       body: data,
       method: 'post'
-    }).catch((err) => console.log(err))
+    })
+      .then(() => {
+        sc.value.name = ''
+        sc.value.description = ''
+        sc.value.phone = ''
+        sc.value.email = ''
+        sc.value.site = ''
+      })
+      .catch((err) => console.log(err))
   }
 </script>
 

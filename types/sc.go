@@ -14,6 +14,16 @@ func NewSc() *Sc {
 	return &sc
 }
 
+func BuildSc(name string, description string, phone string, email string, site string) *Sc {
+	return &Sc{
+		Name:        name,
+		Description: description,
+		Phone:       phone,
+		Email:       email,
+		Site:        site,
+	}
+}
+
 func (sc *Sc) SetId(id int) {
 	sc.id = id
 }

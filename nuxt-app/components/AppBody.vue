@@ -17,9 +17,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    padding: 0 1rem;
   }
   .content {
-    width: 80vw;
+    width: 100%;
+    max-width: 870px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: #cccccc 1px solid;
+    border-bottom: #cccccc 1px solid;
   }
 </style>

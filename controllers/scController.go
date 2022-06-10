@@ -14,14 +14,18 @@ func GetSC(c *gin.Context) {
 	})
 }
 
-func AddSc(c *gin.Context) {
-	sc := types.NewSc()
-	name := c.PostForm("name")
-	description := c.PostForm("description")
-	phone := c.PostForm("phone")
-	sc.Name = name
-	sc.Description = description
-	sc.Phone = phone
+func AddSc(context *gin.Context) {
+	sc := types.BuildSc(getScParams(context))
 	repository.AddSc(sc)
-	c.String(200, "name is %s", sc.Name)
+
+	context.JSON(http.StatusOK, sc)
+}
+
+func getScParams(ctx *gin.Context) (name string, description string, phone string, email string, site string) {
+	name = ctx.PostForm("name")
+	description = ctx.PostForm("description")
+	phone = ctx.PostForm("phone")
+	email = ctx.PostForm("email")
+	site = ctx.PostForm("site")
+	return
 }

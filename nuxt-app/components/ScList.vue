@@ -1,23 +1,30 @@
 <template>
   <div>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
-    <ScCard :name="sc.Name" :description="sc.Description" :phone="sc.Phone" :email="sc.Email" :site="sc.Site"/>
+    <ScCard
+      v-for="sc in scList"
+      :key="sc.id"
+      :name="sc.name"
+      :description="sc.description"
+      :phone="sc.phone"
+      :email="sc.email"
+      :site="sc.site"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-const scList = await $fetch('/api/sc-list')
+const props = defineProps({
+  page: { type: Number, required: true }
+})
 
-const sc = scList[0];
+const data = await $fetch('/api/sc-list?page=' + props.page)
+
+const scList = ref(data)
+
+watch(() => props.page, async (value) => {
+  scList.value = await $fetch('/api/sc-list?page=' + value)
+})
+
 </script>
 
 <style scoped>

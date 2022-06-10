@@ -3,11 +3,13 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/controllers"
+	"github.com/gitHomesPhp/repaircat/middleware"
 	"net/http"
 )
 
 func main() {
 	r := gin.Default()
+	r.Use(middleware.CORSMiddleware())
 	r.LoadHTMLGlob("html/index.html")
 	///////////////////////////////////////////////////////
 	r.GET("/", func(context *gin.Context) {

@@ -1,0 +1,7 @@
+FROM ubuntu:22.10
+
+RUN apt update && apt install -y \
+    curl \
+    nginx
+
+

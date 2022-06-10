@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <img src="assets/img/gear_icon.png" alt="">
     <div class="sc-card">
       <h3 class="sc-card__name">
         {{ name }}
@@ -49,14 +50,21 @@
 
 <style scoped lang="scss">
   .wrapper {
+    min-width: 510px;
     margin-top: .4rem;
     margin-bottom: .4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &>img {
+      width: 100px;
+      height: 75px;
+    }
   }
   .sc-card {
-    min-width: 470px;
     cursor: pointer;
     border: 1px solid #eaeaea;
-    padding: 24px;
+    padding: 15px;
     border-radius: 5px;
     text-align: left;
     flex: 1 1;

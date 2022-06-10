@@ -1,15 +1,14 @@
 <template>
   <div class="footer">
     <small class="author">
-      created by: GitHomesPhp
+      <span>Created by: GitHomesPhp</span>
+      <span>Email: <a href="mailto:githomesphp@gmail.com" target="_blank">githomesphp@gmail.com</a></span>
     </small>
   </div>
 </template>
 
-<script>
-export default {
-  name: "AppFoot"
-}
+<script lang="ts">
+
 </script>
 
 <style scoped lang="scss">
@@ -19,7 +18,16 @@ export default {
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
   overflow: hidden;
-  padding: 2rem 5rem 2rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  small {
+    color: gray;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
 }
 
 </style>
