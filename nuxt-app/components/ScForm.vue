@@ -21,6 +21,18 @@
       <input type="text" size="50" v-model="sc.site">
     </label>
     <label>
+      <span>Город:</span>
+      <input type="text" size="50" v-model="sc.city">
+    </label>
+    <label>
+      <span>Адресс:</span>
+      <input type="text" size="50" v-model="sc.address">
+    </label>
+    <label>
+      <span>Метро:</span>
+      <input type="text" size="50" v-model="sc.underground">
+    </label>
+    <label>
       <input type="submit" value="Добавить">
     </label>
   </form>
@@ -34,6 +46,9 @@
     phone: '',
     email: '',
     site: '',
+    city: '',
+    address: '',
+    underground: '',
   })
 
   const addSc = async () => {
@@ -43,6 +58,9 @@
     data.append('phone', sc.value.phone)
     data.append('email', sc.value.email)
     data.append('site', sc.value.site)
+    data.append('city', sc.value.city)
+    data.append('address', sc.value.address)
+    data.append('underground', sc.value.underground)
 
     await $fetch(config.API + '/sc', {
       body: data,
@@ -54,6 +72,9 @@
         sc.value.phone = ''
         sc.value.email = ''
         sc.value.site = ''
+        sc.value.city = ''
+        sc.value.address = ''
+        sc.value.underground = ''
       })
       .catch((err) => console.log(err))
   }

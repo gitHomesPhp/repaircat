@@ -9,17 +9,30 @@
         {{ description }}
       </div>
       <div class="sc-card__bottom">
-        <div class="sc-card__location">
-          МЕТРО
+        <div class="sc-card__location location">
+          <div class="location__item">
+            <span class="location__image">
+              <img src="assets/img/location_icon.png" alt="">
+            </span>
+            <span>Красногвардейская 6</span>
+          </div>
+          <div class="location__item">
+            <span class="location__image">
+              <img src="assets/img/underground_icon.png" alt="">
+            </span>
+            <span>
+              Проспект Ветеранов
+            </span>
+          </div>
         </div>
         <div class="sc-card__contact contact">
           <div class="sc-card__email contact__item">
-          <span class="contact__image">
-            <img src="../assets/img/email_icon.png" alt="">
-          </span>
+            <span class="contact__image">
+              <img src="assets/img/email_icon.png" alt="">
+            </span>
             <span>
-            {{ email }}
-          </span>
+              {{ email }}
+            </span>
           </div>
           <div class="sc-card__site contact__item">
           <span class="contact__image">
@@ -116,6 +129,17 @@
       align-items: center;
     }
     .contact {
+      &__image {
+        margin-right: .3rem;
+        img {
+          width: 20px;
+        }
+      }
+      &__item {
+        margin-bottom: .4rem;
+      }
+    }
+    .location {
       &__image {
         margin-right: .3rem;
         img {
