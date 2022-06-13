@@ -40,6 +40,8 @@
 
 <script setup lang="ts">
   const config = useRuntimeConfig()
+  const route = useRoute()
+
   const sc = ref({
     name: '',
     description: '',
@@ -61,6 +63,8 @@
     data.append('city', sc.value.city)
     data.append('address', sc.value.address)
     data.append('underground', sc.value.underground)
+    data.append('user', route.query.user)
+    data.append('token', route.query.token)
 
     await $fetch(config.API + '/sc', {
       body: data,

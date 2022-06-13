@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/repository"
 	"github.com/gitHomesPhp/repaircat/types"
@@ -15,11 +16,21 @@ func GetSC(c *gin.Context) {
 }
 
 func AddSc(context *gin.Context) {
-	sc := types.BuildSc(getScParams(context))
-	location := types.BuildLocation(getLocationParams(context))
-	repository.AddSc(sc)
-	repository.AddLocation(location)
-	context.JSON(http.StatusOK, sc)
+	if canContinue(context) {
+		location := types.BuildLocation(getLocationParams(context))
+		repository.AddLocation(location)
+		locationId := repository.GetLocationId(location)
+		sc := types.BuildSc(getScParams(context))
+		sc.SetLocationId(locationId)
+
+		repository.AddSc(sc)
+
+		context.JSON(http.StatusOK, sc)
+	} else {
+		context.JSON(http.StatusOK, gin.H{
+			"success": false,
+		})
+	}
 }
 
 func getScParams(ctx *gin.Context) (name string, description string, phone string, email string, site string) {
@@ -33,7 +44,18 @@ func getScParams(ctx *gin.Context) (name string, description string, phone strin
 
 func getLocationParams(ctx *gin.Context) (city string, address string, underground string) {
 	city = ctx.PostForm("city")
-	address = ctx.PostForm("description")
+	address = ctx.PostForm("address")
 	underground = ctx.PostForm("underground")
 	return
+}
+
+func canContinue(ctx *gin.Context) bool {
+	if ctx.PostForm("user") == "hui" && ctx.PostForm("token") == "bui" {
+		fmt.Println("DAAAAAA")
+		return true
+	}
+
+	fmt.Println("NOOOOOOOOOOO")
+
+	return false
 }

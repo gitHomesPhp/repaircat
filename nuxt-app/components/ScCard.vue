@@ -14,14 +14,16 @@
             <span class="location__image">
               <img src="assets/img/location_icon.png" alt="">
             </span>
-            <span>Красногвардейская 6</span>
+            <span>
+              {{ address }}
+            </span>
           </div>
           <div class="location__item">
             <span class="location__image">
               <img src="assets/img/underground_icon.png" alt="">
             </span>
             <span>
-              Проспект Ветеранов
+              {{ underground }}
             </span>
           </div>
         </div>
@@ -63,6 +65,9 @@
     phone: { required: true, type: String },
     email: { required: true, type: String },
     site: { required: true, type: String },
+    city: { default: '', type: String },
+    address: { required: true, type: String },
+    underground: { required: true, type: String },
   })
 </script>
 

@@ -7,6 +7,7 @@ type Sc struct {
 	Email       string
 	Phone       string
 	Site        string
+	LocationId  int
 }
 
 func NewSc() *Sc {
@@ -24,11 +25,15 @@ func BuildSc(name string, description string, phone string, email string, site s
 	}
 }
 
+func (sc *Sc) SetLocationId(locationId int) {
+	sc.LocationId = locationId
+}
+
 func (sc *Sc) SetId(id int) {
 	sc.id = id
 }
 
-func (sc *Sc) ToMap() map[string]any {
+func (sc *Sc) ToMap(city string, address string, underground string) map[string]any {
 	return map[string]any{
 		"id":          sc.id,
 		"name":        sc.Name,
@@ -36,5 +41,8 @@ func (sc *Sc) ToMap() map[string]any {
 		"email":       sc.Email,
 		"phone":       sc.Phone,
 		"site":        sc.Site,
+		"city":        city,
+		"address":     address,
+		"underground": underground,
 	}
 }

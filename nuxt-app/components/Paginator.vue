@@ -1,17 +1,19 @@
 <template>
   <div class="paginator" :class="type + '-paginator'">
     <div class="paginator__wrapper">
-      <span class="pointer" @click="previousPage">Предыдущая</span>
+      <span><span v-if="previous" class="pointer" @click="previousPage">Предыдущая</span></span>
       <span class="paginator__page">{{ page }}</span>
-      <span class="pointer" @click="nextPage">Следующая</span>
+      <span><span v-if="next" class="pointer" @click="nextPage">Следующая</span></span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  defineProps({
+  const props = defineProps({
     type: { type: String },
-    page: { type: Number, default: 1}
+    page: { type: Number, default: 1},
+    next: {},
+    previous: {},
   })
   const emit = defineEmits([
       'next-page',
@@ -19,10 +21,12 @@
   ])
 
   const nextPage = () => {
-    emit('next-page')
+      emit('next-page')
   }
   const previousPage = () => {
-    emit('previous-page')
+    if (props.page > 1) {
+      emit('previous-page')
+    }
   }
 
 </script>

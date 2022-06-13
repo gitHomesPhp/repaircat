@@ -7,11 +7,23 @@ import (
 	"github.com/gitHomesPhp/repaircat/utils/pg"
 )
 
-const sqlSelectList = "select id, name, description, phone, email, site from sc "
-const insertSc = "insert into sc(name, description, phone, email, site) values($1, $2, $3, $4, $5)"
+const sqlSelectList = "SELECT " +
+	"sc.id, " +
+	"COALESCE(name, ''), " +
+	"COALESCE(description, ''), " +
+	"COALESCE(phone, ''), " +
+	"COALESCE(email, ''), " +
+	"COALESCE(site, ''), " +
+	"COALESCE(city, ''), " +
+	"COALESCE(address, ''), " +
+	"COALESCE(underground, '') " +
+	"FROM sc LEFT JOIN location " +
+	"ON location_id = location.id "
+
+const insertSc = "insert into sc(name, description, phone, email, site, location_id) values($1, $2, $3, $4, $5, $6)"
 
 func AddSc(sc *types.Sc) {
-	_, err := pg.Conn().Exec(context.Background(), insertSc, sc.Name, sc.Description, sc.Phone, sc.Email, sc.Site)
+	_, err := pg.Conn().Exec(context.Background(), insertSc, sc.Name, sc.Description, sc.Phone, sc.Email, sc.Site, sc.LocationId)
 	fmt.Println(err)
 }
 
@@ -20,7 +32,7 @@ func GetScList2(pageNumber int) map[int]map[string]any {
 	to := COUNT * pageNumber
 	from := (COUNT*pageNumber+1)%COUNT + COUNT*(pageNumber-1)
 
-	rows, err := pg.Conn().Query(context.Background(), sqlSelectList+"where id >= $1 and id <= $2", from, to)
+	rows, err := pg.Conn().Query(context.Background(), sqlSelectList+"where sc.id >= $1 and sc.id <= $2", from, to)
 
 	if err != nil {
 		fmt.Println(err)
@@ -31,49 +43,27 @@ func GetScList2(pageNumber int) map[int]map[string]any {
 	for rows.Next() {
 		var id int
 		sc := types.NewSc()
+		location := types.NewLocation()
 
-		err := rows.Scan(&id, &sc.Name, &sc.Description, &sc.Phone, &sc.Email, &sc.Site)
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(err)
-			fmt.Println(err)
-		}
-
-		sc.SetId(id)
-		scList[i] = sc.ToMap()
-		i++
-	}
-
-	return scList
-}
-
-func GetScList(pageNumber int) [10]*types.Sc {
-	const COUNT = 10
-	to := COUNT * pageNumber
-	from := (COUNT*pageNumber+1)%COUNT + COUNT*(pageNumber-1)
-
-	rows, err := pg.Conn().Query(context.Background(), sqlSelectList+"where id >= $1 and id <= $2", from, to)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	var scList [10]*types.Sc
-	i := 0
-	for rows.Next() {
-		var id int
-		sc := types.NewSc()
-
-		err := rows.Scan(&id, &sc.Name, &sc.Description, &sc.Phone, &sc.Email, &sc.Site)
+		err := rows.Scan(&id, &sc.Name, &sc.Description, &sc.Phone, &sc.Email, &sc.Site, &location.City, &location.Address, &location.Underground)
 		if err != nil {
 			fmt.Println(err)
 		}
 
 		sc.SetId(id)
-
-		scList[i] = sc
+		scList[i] = sc.ToMap(location.City, location.Address, location.Underground)
 		i++
 	}
 
+	var next int
+	var previous int
+
+	pg.Conn().QueryRow(context.Background(), "SELECT id FROM sc where id = $1", to+1).Scan(&next)
+	pg.Conn().QueryRow(context.Background(), "SELECT id FROM sc where id = $1", from-1).Scan(&previous)
+
+	scList[i] = map[string]any{
+		"next":     next,
+		"previous": previous,
+	}
 	return scList
 }

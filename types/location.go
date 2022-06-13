@@ -7,6 +7,10 @@ type Location struct {
 	Underground string
 }
 
+func NewLocation() *Location {
+	return &Location{}
+}
+
 func BuildLocation(city string, address string, underground string) *Location {
 	return &Location{
 		City:        city,
