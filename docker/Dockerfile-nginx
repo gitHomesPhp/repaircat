@@ -1,1 +1,11 @@
 FROM nginx:1.22.0
+
+RUN apt update && apt install -y \
+    curl \
+    cron \
+    nano \
+    net-tools
+
+COPY docker/nginx/site.conf /etc/nginx/conf.d/
+
+RUN rm -rf /etc/nginx/sites-enabled/default*

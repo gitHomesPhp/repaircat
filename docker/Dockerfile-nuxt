@@ -1,1 +1,21 @@
+FROM node:16.15.1 as builder
+
+WORKDIR /app
+
+COPY nuxt-app /app
+
+RUN yarn install && npm run build
+
 FROM node:16.15.1
+
+RUN apt update && apt install -y \
+    curl \
+    cron \
+    nano \
+    net-tools
+
+WORKDIR /app
+
+COPY --from=builder /app/.output /app
+
+CMD ["node", "./server/index.mjs"]

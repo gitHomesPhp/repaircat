@@ -4,36 +4,40 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: Dockerfile-nginx
+      context: ${PATH_TO_PROJECT}
+      dockerfile: docker/Dockerfile-nginx
+    ports:
+      - '80:80'
+      - '443:443'
     restart: always
     networks:
       sc_network:
-        ipv4_address: 172.16.0.2
+        ipv4_address: 172.172.0.2
   server:
     container_name: server
     build:
-      context: .
-      dockerfile: Dockerfile-go
+      context: ${PATH_TO_PROJECT}
+      dockerfile: docker/Dockerfile-go
     restart: always
     networks:
       sc_network:
-        ipv4_address: 172.16.0.3
+        ipv4_address: 172.172.0.3
   app:
     container_name: app
     build:
-      context: .
-      dockerfile: Dockerfile-nuxt
+      context: ${PATH_TO_PROJECT}
+      dockerfile: docker/Dockerfile-nuxt
     restart: always
     networks:
       sc_network:
-        ipv4_address: 172.16.0.4
+        ipv4_address: 172.172.0.4
 
 networks:
   sc_network:
+    name: sc_network
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1
+        - subnet: 172.172.0.0/24
+          gateway: 172.172.0.1
