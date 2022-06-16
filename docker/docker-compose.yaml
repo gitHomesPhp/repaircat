@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    restart: always
+    networks:
+      sc_network:
+        ipv4_address: 172.16.0.2
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile-go
+    restart: always
+    networks:
+      sc_network:
+        ipv4_address: 172.16.0.3
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile-nuxt
+    restart: always
+    networks:
+      sc_network:
+        ipv4_address: 172.16.0.4
+
+networks:
+  sc_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1
