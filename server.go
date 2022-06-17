@@ -15,6 +15,7 @@ func main() {
 	r.GET("/", func(context *gin.Context) {
 		context.HTML(http.StatusOK, "index.html", gin.H{})
 	})
+	r.GET("/test", controllers.Test)
 	r.GET("/sc-list", controllers.GetScList)
 	r.GET("/sc/:id", controllers.GetSC)
 	r.POST("/sc", controllers.AddSc)

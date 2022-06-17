@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/repository"
+	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
 	"github.com/gitHomesPhp/repaircat/types"
 	"net/http"
 )
@@ -13,6 +14,16 @@ func GetSC(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"id": id,
 	})
+}
+
+func Test(c *gin.Context) {
+	list, err := sc_repository.List(1)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	c.JSON(http.StatusOK, list)
 }
 
 func AddSc(context *gin.Context) {
