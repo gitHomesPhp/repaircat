@@ -16,6 +16,7 @@ func main() {
 		context.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 	r.GET("/test", controllers.Test)
+	r.POST("/test", controllers.AddSc2)
 	r.GET("/sc-list", controllers.GetScList)
 	r.GET("/sc/:id", controllers.GetSC)
 	r.POST("/sc", controllers.AddSc)

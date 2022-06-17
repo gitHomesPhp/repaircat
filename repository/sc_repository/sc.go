@@ -2,6 +2,7 @@ package sc_repository
 
 import (
 	"context"
+	"fmt"
 	"github.com/gitHomesPhp/repaircat/entity"
 	"github.com/gitHomesPhp/repaircat/utils/pg"
 )
@@ -12,7 +13,7 @@ func List(page int) ([]map[string]any, error) {
 	from := (COUNT*page+1)%COUNT + COUNT*(page-1)
 
 	rows, err := pg.Conn().Query(context.Background(), SelectScPage, from, to)
-
+	fmt.Println(rows)
 	if err != nil {
 		return nil, err
 	}

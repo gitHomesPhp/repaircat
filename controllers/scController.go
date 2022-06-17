@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gitHomesPhp/repaircat/entity"
 	"github.com/gitHomesPhp/repaircat/repository"
 	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
 	"github.com/gitHomesPhp/repaircat/types"
@@ -17,13 +18,32 @@ func GetSC(c *gin.Context) {
 }
 
 func Test(c *gin.Context) {
-	list, err := sc_repository.List(1)
+	c1 := make(chan []map[string]any)
+	go func() {
+		list, err := sc_repository.List(1)
 
-	if err != nil {
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(list)
+
+		c1 <- list
+
+	}()
+
+	listO := <-c1
+	c.JSON(http.StatusOK, listO)
+}
+
+func AddSc2(context *gin.Context) {
+	cCp := context.Copy()
+	go func() {
+		sc := entity.NewSc(getScParams(context))
+		err := sc_repository.Flush(sc)
 		fmt.Println(err)
-	}
+		cCp.JSON(http.StatusOK, sc.ToMap())
+	}()
 
-	c.JSON(http.StatusOK, list)
 }
 
 func AddSc(context *gin.Context) {
