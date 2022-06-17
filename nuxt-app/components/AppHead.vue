@@ -1,7 +1,9 @@
 <template>
   <div class="header">
     <div class="header__logo">
-      <span>Repaircat</span>
+      <NuxtLink to="/" style="text-decoration: none; color: white">
+        <span>Repaircat</span>
+      </NuxtLink>
     </div>
     <header>
 

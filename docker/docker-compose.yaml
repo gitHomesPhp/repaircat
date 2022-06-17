@@ -41,6 +41,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5431:5432'
+    restart: always
     networks:
       sc_network:
         ipv4_address: 172.172.0.5
