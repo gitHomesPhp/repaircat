@@ -54,20 +54,19 @@
   })
 
   const addSc = async () => {
-    const data = new FormData()
-    data.append('name', sc.value.name)
-    data.append('description', sc.value.description)
-    data.append('phone', sc.value.phone)
-    data.append('email', sc.value.email)
-    data.append('site', sc.value.site)
-    data.append('city', sc.value.city)
-    data.append('address', sc.value.address)
-    data.append('underground', sc.value.underground)
-    data.append('user', route.query.user)
-    data.append('token', route.query.token)
-
-    await $fetch(config.API + '/sc', {
-      body: data,
+    await $fetch('/api/sc', {
+      body: {
+        name: sc.value.name,
+        description: sc.value.description,
+        phone: sc.value.phone,
+        email: sc.value.email,
+        site: sc.value.site,
+        city: sc.value.city,
+        address: sc.value.address,
+        underground: sc.value.underground,
+        user: route.query.user,
+        token: route.query.token,
+      },
       method: 'post'
     })
       .then(() => {
