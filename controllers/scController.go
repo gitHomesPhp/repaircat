@@ -4,47 +4,20 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/entity"
-	"github.com/gitHomesPhp/repaircat/repository"
+	"github.com/gitHomesPhp/repaircat/repository/location_repository"
 	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
-	"github.com/gitHomesPhp/repaircat/types"
 	"net/http"
 )
 
-func GetSC(c *gin.Context) {
-	id := c.Param("id")
-	c.JSON(http.StatusOK, gin.H{
-		"id": id,
-	})
-}
-
-func Test(c *gin.Context) {
-	list, err := sc_repository.List(1)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	c.JSON(http.StatusOK, list)
-}
-
-func AddSc2(context *gin.Context) {
-	sc := entity.NewSc(getScParams(context))
-	err := sc_repository.Flush(sc)
-	fmt.Println(err)
-	context.JSON(http.StatusOK, sc.ToMap())
-}
-
 func AddSc(context *gin.Context) {
 	if canContinue(context) {
-		location := types.BuildLocation(getLocationParams(context))
-		repository.AddLocation(location)
-		locationId := repository.GetLocationId(location)
-		sc := types.BuildSc(getScParams(context))
-		sc.SetLocationId(locationId)
-
-		repository.AddSc(sc)
-
-		context.JSON(http.StatusOK, sc)
+		location := entity.NewLocation(getLocationParams(context))
+		err, location := location_repository.Flush(location)
+		sc := entity.NewSc(getScParams(context))
+		sc.AddLocation(location)
+		err = sc_repository.Flush(sc)
+		fmt.Println(err)
+		context.JSON(http.StatusOK, sc.ToMap())
 	} else {
 		context.JSON(http.StatusOK, gin.H{
 			"success": false,
@@ -52,7 +25,7 @@ func AddSc(context *gin.Context) {
 	}
 }
 
-func getScParams(ctx *gin.Context) (name string, description string, phone string, email string, site string) {
+func getScParams(ctx *gin.Context) (name, description, phone, email, site string) {
 	name = ctx.PostForm("name")
 	description = ctx.PostForm("description")
 	phone = ctx.PostForm("phone")

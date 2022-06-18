@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/entity"
-	"github.com/gitHomesPhp/repaircat/utils/pg"
 	"github.com/jackc/pgx/v4"
 	"os"
 )
@@ -21,14 +20,21 @@ func List(page int) ([]map[string]any, error) {
 	to := COUNT * page
 	from := (COUNT*page+1)%COUNT + COUNT*(page-1)
 
-	rows, _ := conn.Query(context.Background(), SelectScPage, from, to)
+	rows, _ := conn.Query(context.Background(), SelectScWithLocationPageCursor, COUNT, COUNT*page-COUNT)
 
 	var scList []map[string]any
 
 	for rows.Next() {
 		sc := entity.EmptySc()
+		location := entity.EmptyLocation()
 
-		err := rows.Scan(sc.GetAttributes())
+		attrs := append(sc.GetAttributes2(), location.GetAttributes2()...)
+		err := rows.Scan(attrs...)
+
+		if location.GetId() != 0 {
+			sc.AddLocation(location)
+		}
+
 		if err != nil {
 			return nil, err
 		}
@@ -54,17 +60,27 @@ func List(page int) ([]map[string]any, error) {
 }
 
 func Flush(sc *entity.Sc) error {
-	_, err := pg.Conn().Exec(context.Background(), InsertSc,
+	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@localhost:5431/repaircat")
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
+	_, err = conn.Exec(context.Background(), InsertSc,
 		sc.GetName(),
 		sc.GetDescription(),
 		sc.GetPhone(),
 		sc.GetEmail(),
 		sc.GetSite(),
+		sc.GetLocation().GetId(),
 	)
 
 	if err != nil {
 		return err
 	}
+
+	defer conn.Close(context.Background())
 
 	return nil
 }

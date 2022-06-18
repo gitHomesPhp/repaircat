@@ -1,16 +1,23 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gitHomesPhp/repaircat/repository"
+	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
 	"net/http"
 	"strconv"
 )
 
-func GetScList(c *gin.Context) {
-	page, _ := strconv.Atoi(c.Query("page"))
+func ScList(ctx *gin.Context) {
+	page, err := strconv.Atoi(ctx.Query("page"))
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	scList := repository.GetScList2(page)
+	scList, err := sc_repository.List(page)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	c.JSON(http.StatusOK, scList)
+	ctx.JSON(http.StatusOK, scList)
 }

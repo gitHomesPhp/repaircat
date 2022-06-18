@@ -7,7 +7,7 @@ type Sc struct {
 	phone       string
 	email       string
 	site        string
-	location    Location
+	location    *Location
 }
 
 func NewSc(name, description, phone, email, site string) *Sc {
@@ -17,6 +17,7 @@ func NewSc(name, description, phone, email, site string) *Sc {
 		phone:       phone,
 		email:       email,
 		site:        site,
+		location:    nil,
 	}
 }
 
@@ -35,12 +36,22 @@ func (sc *Sc) GetAttributes() (*int, *string, *string, *string, *string, *string
 	return &sc.id, &sc.name, &sc.description, &sc.phone, &sc.email, &sc.site
 }
 
+func (sc *Sc) GetAttributes2() []any {
+	return []any{
+		&sc.id, &sc.name, &sc.description, &sc.phone, &sc.email, &sc.site,
+	}
+}
+
 func (sc *Sc) SetId(id int) {
 	sc.id = id
 }
 
+func (sc *Sc) AddLocation(location *Location) {
+	sc.location = location
+}
+
 func (sc *Sc) ToMap() map[string]any {
-	return map[string]any{
+	scMap := map[string]any{
 		"id":          sc.id,
 		"name":        sc.name,
 		"description": sc.description,
@@ -48,6 +59,14 @@ func (sc *Sc) ToMap() map[string]any {
 		"phone":       sc.phone,
 		"site":        sc.site,
 	}
+
+	if sc.location == nil {
+		sc.location = EmptyLocation()
+	}
+
+	scMap["location"] = sc.location.ToMap()
+
+	return scMap
 }
 
 func (sc *Sc) GetName() string {
@@ -64,4 +83,7 @@ func (sc *Sc) GetEmail() string {
 }
 func (sc *Sc) GetSite() string {
 	return sc.site
+}
+func (sc *Sc) GetLocation() *Location {
+	return sc.location
 }

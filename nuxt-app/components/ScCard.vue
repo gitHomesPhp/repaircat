@@ -15,7 +15,7 @@
               <img src="~/assets/img/location_icon.png" alt="">
             </span>
             <span>
-              {{ address }}
+              {{ location.address }}
             </span>
           </div>
           <div class="location__item">
@@ -23,7 +23,7 @@
               <img src="~/assets/img/underground_icon.png" alt="">
             </span>
             <span>
-              {{ underground }}
+              {{ location.underground }}
             </span>
           </div>
         </div>
@@ -66,8 +66,7 @@
     email: { required: true, type: String },
     site: { required: true, type: String },
     city: { default: '', type: String },
-    address: { required: true, type: String },
-    underground: { required: true, type: String },
+    location: { required: true, type: Object },
   })
 </script>
 

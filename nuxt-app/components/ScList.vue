@@ -8,8 +8,7 @@
       :phone="sc.phone"
       :email="sc.email"
       :site="sc.site"
-      :address="sc.address"
-      :underground="sc.underground"
+      :location="sc.location"
     />
   </div>
 </template>
