@@ -18,32 +18,20 @@ func GetSC(c *gin.Context) {
 }
 
 func Test(c *gin.Context) {
-	c1 := make(chan []map[string]any)
-	go func() {
-		list, err := sc_repository.List(1)
+	list, err := sc_repository.List(1)
 
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println(list)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-		c1 <- list
-
-	}()
-
-	listO := <-c1
-	c.JSON(http.StatusOK, listO)
+	c.JSON(http.StatusOK, list)
 }
 
 func AddSc2(context *gin.Context) {
-	cCp := context.Copy()
-	go func() {
-		sc := entity.NewSc(getScParams(context))
-		err := sc_repository.Flush(sc)
-		fmt.Println(err)
-		cCp.JSON(http.StatusOK, sc.ToMap())
-	}()
-
+	sc := entity.NewSc(getScParams(context))
+	err := sc_repository.Flush(sc)
+	fmt.Println(err)
+	context.JSON(http.StatusOK, sc.ToMap())
 }
 
 func AddSc(context *gin.Context) {

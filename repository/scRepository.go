@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/types"
 	"github.com/gitHomesPhp/repaircat/utils/pg"
+	"github.com/jackc/pgx/v4"
+	"os"
 )
 
 const sqlSelectList = "SELECT " +
@@ -28,11 +30,18 @@ func AddSc(sc *types.Sc) {
 }
 
 func GetScList2(pageNumber int) map[int]map[string]any {
+	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@localhost:5431/repaircat")
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
 	const COUNT = 10
 	to := COUNT * pageNumber
 	from := (COUNT*pageNumber+1)%COUNT + COUNT*(pageNumber-1)
 
-	rows, err := pg.Conn().Query(context.Background(), sqlSelectList+"where sc.id >= $1 and sc.id <= $2", from, to)
+	rows, err := conn.Query(context.Background(), sqlSelectList+"where sc.id >= $1 and sc.id <= $2", from, to)
 
 	if err != nil {
 		fmt.Println(err)
@@ -58,12 +67,15 @@ func GetScList2(pageNumber int) map[int]map[string]any {
 	var next int
 	var previous int
 
-	pg.Conn().QueryRow(context.Background(), "SELECT id FROM sc where id = $1", to+1).Scan(&next)
-	pg.Conn().QueryRow(context.Background(), "SELECT id FROM sc where id = $1", from-1).Scan(&previous)
+	conn.QueryRow(context.Background(), "SELECT id FROM sc where id = $1", to+1).Scan(&next)
+	conn.QueryRow(context.Background(), "SELECT id FROM sc where id = $1", from-1).Scan(&previous)
 
 	scList[i] = map[string]any{
 		"next":     next,
 		"previous": previous,
 	}
+
+	defer conn.Close(context.Background())
+
 	return scList
 }

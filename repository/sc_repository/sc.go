@@ -5,21 +5,26 @@ import (
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/entity"
 	"github.com/gitHomesPhp/repaircat/utils/pg"
+	"github.com/jackc/pgx/v4"
+	"os"
 )
 
 func List(page int) ([]map[string]any, error) {
+	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@localhost:5431/repaircat")
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
 	const COUNT = 10
 	to := COUNT * page
 	from := (COUNT*page+1)%COUNT + COUNT*(page-1)
 
-	rows, err := pg.Conn().Query(context.Background(), SelectScPage, from, to)
-	fmt.Println(rows)
-	if err != nil {
-		return nil, err
-	}
+	rows, _ := conn.Query(context.Background(), SelectScPage, from, to)
 
 	var scList []map[string]any
-	i := 0
+
 	for rows.Next() {
 		sc := entity.EmptySc()
 
@@ -29,25 +34,21 @@ func List(page int) ([]map[string]any, error) {
 		}
 
 		scList = append(scList, sc.ToMap())
-		i++
 	}
 
 	var next int
 	var previous int
 
-	err = pg.Conn().QueryRow(context.Background(), SelectId, to+1).Scan(&next)
-	if err != nil {
-		return nil, err
-	}
-	err = pg.Conn().QueryRow(context.Background(), SelectId, from-1).Scan(&previous)
-	if err != nil {
-		return nil, err
-	}
+	_ = conn.QueryRow(context.Background(), SelectId, to+1).Scan(&next)
+
+	_ = conn.QueryRow(context.Background(), SelectId, from-1).Scan(&previous)
 
 	scList = append(scList, map[string]any{
 		"next":     next,
 		"previous": previous,
 	})
+
+	defer conn.Close(context.Background())
 
 	return scList, nil
 }
