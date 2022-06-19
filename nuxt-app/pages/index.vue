@@ -25,9 +25,27 @@
 </template>
 
 <script lang="ts" setup>
-  const page = ref(1)
-  const incrementPage = () => page.value++
-  const decrementPage = () => page.value--
+  const route = useRoute()
+  const router = useRouter()
+  const page = ref(route.query.page ? route.query.page: 1)
+
+
+  const incrementPage = () => {
+    page.value++
+    router.push({
+      query: {
+        page: page.value
+      }
+    })
+  }
+  const decrementPage = () => {
+    page.value--
+    router.push({
+      query: {
+        page: page.value
+      }
+    })
+  }
 
   const previous = ref(false)
   const next = ref(true)
@@ -35,8 +53,9 @@
   const setPaginateNextPrevious = (data) => {
     previous.value = !!data.previous
     next.value = !!data.next
-    console.log(next.value)
   }
+
+  watch(() => route.query.page, () => page.value = route.query.page ? route.query.page: 1)
 
 </script>
 

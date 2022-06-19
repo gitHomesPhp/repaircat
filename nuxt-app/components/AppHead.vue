@@ -6,7 +6,9 @@
       </NuxtLink>
     </div>
     <header>
-
+      <nav class="header__navigation">
+        <slot />
+      </nav>
     </header>
   </div>
 </template>
@@ -29,6 +31,9 @@ export default {
       padding: .4rem;
       font-weight: bolder;
       font-size: 1.3rem;
+    }
+    &__navigation {
+      background-color: #f2f8fc;
     }
   }
 </style>

@@ -40,7 +40,7 @@
           <span class="contact__image">
             <img src="~/assets/img/site_icon.png" alt="">
           </span>
-            <span>
+          <span>
             <a :href="site">{{ site }}</a>
           </span>
           </div>
@@ -127,6 +127,10 @@
     &__site {
       display: flex;
       align-items: center;
+      a {
+        text-decoration: none;
+        color: #0070c0;
+      }
     }
     &__phone {
       display: flex;

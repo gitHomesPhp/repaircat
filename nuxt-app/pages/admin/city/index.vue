@@ -4,7 +4,9 @@
       <AdminMenu />
     </AppHead>
     <AppBody>
-      <ScForm />
+      <form>
+
+      </form>
     </AppBody>
     <AppFoot />
   </div>
