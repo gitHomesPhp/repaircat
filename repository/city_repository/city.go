@@ -9,7 +9,7 @@ import (
 )
 
 func GetAllCities() ([]map[string]any, error) {
-	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@postgres:5432/repaircat")
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -36,7 +36,7 @@ func GetAllCities() ([]map[string]any, error) {
 }
 
 func Flush(city *entity.City) {
-	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@postgres:5432/repaircat")
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)

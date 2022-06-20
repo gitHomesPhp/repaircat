@@ -20,6 +20,8 @@ services:
       context: ${PATH_TO_PROJECT}
       dockerfile: docker/Dockerfile-go
     restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:secret@postgres:5432/repaircat
     networks:
       sc_network:
         ipv4_address: 172.172.0.3
@@ -30,6 +32,8 @@ services:
       context: ${PATH_TO_PROJECT}
       dockerfile: docker/Dockerfile-nuxt
     restart: always
+    environment:
+      API_BASE_URL: http://api.doctu.ru
     networks:
       sc_network:
         ipv4_address: 172.172.0.4
