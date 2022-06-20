@@ -17,3 +17,9 @@ CREATE TABLE IF NOT EXISTS location (
     address VARCHAR ( 511 ),
     underground VARCHAR (255)
 );
+
+CREATE TABLE IF NOT EXISTS city (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR ( 7 ) UNIQUE NOT NULL,
+    label VARCHAR ( 63 ) UNIQUE NOT NULL
+)

@@ -4,9 +4,7 @@
       <AdminMenu />
     </AppHead>
     <AppBody>
-      <form>
-
-      </form>
+      <CityForm />
     </AppBody>
     <AppFoot />
   </div>

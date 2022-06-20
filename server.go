@@ -14,6 +14,7 @@ func main() {
 
 	route.GET("/sc-list", controllers.ScList)
 	route.POST("/sc", controllers.AddSc)
+	route.POST("/city", controllers.AddCity)
 
 	///////////////////////////////////////////////////////
 	route.Run()
