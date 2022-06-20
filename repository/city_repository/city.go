@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func GetAll() {
+func GetAllCities() ([]map[string]any, error) {
 	conn, err := pgx.Connect(context.Background(), "postgresql://postgres:secret@postgres:5432/repaircat")
 
 	if err != nil {
@@ -16,6 +16,23 @@ func GetAll() {
 		os.Exit(1)
 	}
 
+	rows, err := conn.Query(context.Background(), SelectCities)
+	if err != nil {
+		return nil, err
+	}
+
+	var cities []map[string]any
+
+	for rows.Next() {
+		city := entity.EmptyCity()
+
+		rows.Scan(city.GetAttributes()...)
+		cities = append(cities, city.ToMap())
+	}
+
+	defer conn.Close(context.Background())
+
+	return cities, nil
 }
 
 func Flush(city *entity.City) {

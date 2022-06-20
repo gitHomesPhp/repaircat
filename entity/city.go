@@ -21,6 +21,14 @@ func EmptyCity() *City {
 	}
 }
 
+func (city *City) ToMap() map[string]any {
+	return map[string]any{
+		"label": city.label,
+		"code":  city.code,
+		"id":    city.id,
+	}
+}
+
 func (city *City) GetAttributes() []any {
 	return []any{
 		&city.id, &city.label, &city.code,

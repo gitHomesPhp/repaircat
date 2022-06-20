@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/entity"
 	"github.com/gitHomesPhp/repaircat/repository/city_repository"
@@ -21,4 +22,13 @@ func AddCity(ctx *gin.Context) {
 			"success": false,
 		})
 	}
+}
+
+func AllCities(ctx *gin.Context) {
+	cities, err := city_repository.GetAllCities()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	ctx.JSON(http.StatusOK, cities)
 }

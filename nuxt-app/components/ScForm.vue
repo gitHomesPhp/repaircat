@@ -22,7 +22,9 @@
     </label>
     <label>
       <span>Город:</span>
-      <input type="text" size="50" v-model="sc.city">
+      <select v-model="sc.city">
+        <option v-for="city in cityMenu" :value="city.label">{{ city.label }}</option>
+      </select>
     </label>
     <label>
       <span>Адресс:</span>
@@ -39,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-  const config = useRuntimeConfig()
   const route = useRoute()
+  const cityMenu = await $fetch('/api/city')
 
   const sc = ref({
     name: '',
@@ -48,7 +50,7 @@
     phone: '',
     email: '',
     site: '',
-    city: '',
+    city: cityMenu[0].label,
     address: '',
     underground: '',
   })

@@ -9,6 +9,6 @@ const SelectCities = `
 	SELECT
 		id,
 		label,
-		code,
+		code
 	FROM city
 `
