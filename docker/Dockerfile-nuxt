@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY nuxt-app /app
 
-ENV API_BASE_URL api.repaircat.ru
+ENV API_BASE_URL http://api.repaircat.ru
 
 RUN yarn install && npm run build
 
@@ -20,6 +20,6 @@ WORKDIR /app
 
 COPY --from=builder /app/.output /app
 
-ENV API_BASE_URL api.repaircat.ru
+ENV API_BASE_URL http://api.repaircat.ru
 
 CMD ["node", "./server/index.mjs"]
