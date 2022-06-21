@@ -2,12 +2,12 @@ package entity
 
 type Location struct {
 	id          int
-	city        string
+	city        *City
 	address     string
-	underground string
+	underground *Underground
 }
 
-func NewLocation(city, address, underground string) *Location {
+func NewLocation(city *City, address string, underground *Underground) *Location {
 	return &Location{
 		city:        city,
 		address:     address,
@@ -18,9 +18,9 @@ func NewLocation(city, address, underground string) *Location {
 func EmptyLocation() *Location {
 	return &Location{
 		id:          0,
-		city:        "",
+		city:        nil,
 		address:     "",
-		underground: "",
+		underground: nil,
 	}
 }
 
@@ -32,25 +32,29 @@ func (location *Location) GetId() int {
 	return location.id
 }
 
-func (location *Location) GetAttributes() (*int, *string, *string, *string) {
-	return &location.id, &location.city, &location.address, &location.underground
-}
-
 func (location *Location) GetAttributes2() []any {
+	if location.city == nil {
+		location.city = EmptyCity()
+	}
+
+	if location.underground == nil {
+		location.underground = EmptyUnderground()
+	}
+
 	return []any{
-		&location.id, &location.city, &location.address, &location.underground,
+		&location.id, &location.city.label, &location.address, &location.underground.label,
 	}
 }
 
 func (location *Location) ToMap() map[string]any {
 	return map[string]any{
-		"city":        location.city,
+		"city":        location.city.ToMap(),
 		"address":     location.address,
-		"underground": location.underground,
+		"underground": location.underground.ToMap(),
 	}
 }
 
-func (location *Location) GetCity() string {
+func (location *Location) GetCity() *City {
 	return location.city
 }
 
@@ -58,6 +62,6 @@ func (location *Location) GetAddress() string {
 	return location.address
 }
 
-func (location *Location) GetUnderGround() string {
+func (location *Location) GetUnderGround() *Underground {
 	return location.underground
 }

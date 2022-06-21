@@ -35,6 +35,14 @@ func (city *City) GetAttributes() []any {
 	}
 }
 
+func (city *City) SetId(id int) {
+	city.id = id
+}
+
+func (city *City) GetId() int {
+	return city.id
+}
+
 func (city *City) GetLabel() string {
 	return city.label
 }

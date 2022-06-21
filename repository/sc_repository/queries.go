@@ -41,19 +41,21 @@ const SelectScWithLocationPage = `
 `
 
 const SelectScWithLocationPageCursor = `
-	SELECT
-		sc.id,
-		COALESCE(name, ''),
-		COALESCE(description, ''),
-		COALESCE(phone, ''),
-		COALESCE(email, ''),
-		COALESCE(site, ''),
-		COALESCE(location.id, 0),
-		COALESCE(city, ''),
-		COALESCE(address, ''),
-		COALESCE(underground, '')
-	FROM sc LEFT JOIN location ON location_id = location.id
-	ORDER BY sc.id ASC
-	LIMIT $1
-	OFFSET $2
+SELECT
+    sc.id,
+    COALESCE(name, '') as name,
+    COALESCE(description, '') as description,
+    COALESCE(phone, '') as phone,
+    COALESCE(email, '') as email,
+    COALESCE(site, '') as site,
+    COALESCE(location.id, 0) as location_id,
+    COALESCE(city.label, '') as city,
+    COALESCE(address, '') as address,
+    COALESCE(underground.label, '') as underground
+FROM sc LEFT JOIN location ON location_id = location.id
+	JOIN city on location.city_id = city.id
+	JOIN underground on location.underground_id = underground.id
+ORDER BY sc.id ASC
+LIMIT $1
+OFFSET $2
 `

@@ -32,3 +32,11 @@ func (underground *Underground) ToMap() map[string]any {
 
 	return undergroundMap
 }
+
+func (underground *Underground) SetId(id int) {
+	underground.id = id
+}
+
+func (underground *Underground) GetId() int {
+	return underground.id
+}

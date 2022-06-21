@@ -5,9 +5,7 @@
       <h3 class="sc-card__name">
         {{ name }}
       </h3>
-      <div class="sc-card__description">
-        {{ description }}
-      </div>
+      <div class="sc-card__description" v-html="description"></div>
       <div class="sc-card__bottom">
         <div class="sc-card__location location">
           <div class="location__item">
@@ -23,7 +21,7 @@
               <img src="~/assets/img/underground_icon.png" alt="">
             </span>
             <span>
-              {{ location.underground }}
+              {{ location.underground.label }}
             </span>
           </div>
         </div>
