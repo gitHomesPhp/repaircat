@@ -70,7 +70,6 @@
 
 <style scoped lang="scss">
   .wrapper {
-    min-width: 510px;
     margin-top: .4rem;
     margin-bottom: .4rem;
     display: flex;
