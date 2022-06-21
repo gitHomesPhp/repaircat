@@ -109,6 +109,9 @@
     &__bottom {
       display: flex;
       justify-content: space-between;
+      @media(max-width: 510px) {
+        flex-direction: column;
+      }
     }
     &__name {
       font-weight: bolder;
