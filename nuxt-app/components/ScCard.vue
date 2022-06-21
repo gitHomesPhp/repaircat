@@ -75,6 +75,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    @media(max-width: 510px) {
+      flex-direction: column;
+      &>img {
+        margin-bottom: .4rem;
+      }
+    }
     &>img {
       width: 100px;
       height: 75px;
