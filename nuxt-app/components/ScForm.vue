@@ -98,6 +98,20 @@
       flex-direction: row;
       justify-content: space-between;
       margin-bottom: .5rem;
+      input {
+        width: 30rem;
+      }
+      textarea {
+        width: 30rem;
+      }
+    }
+  }
+  @media (max-width: 670px) {
+    input {
+      width: 23rem;
+    }
+    textarea {
+      width: 23rem;
     }
   }
 
