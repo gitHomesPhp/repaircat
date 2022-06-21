@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
   const route = useRoute()
-  const cityMenu = await $fetch('/api/city')
+  const cityMenu = await $fetch('api/city')
 
   const sc = ref({
     name: '',
@@ -56,7 +56,7 @@
   })
 
   const addSc = async () => {
-    await $fetch('/api/sc', {
+    await $fetch('api/sc', {
       body: {
         name: sc.value.name,
         description: sc.value.description,

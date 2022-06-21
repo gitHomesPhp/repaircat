@@ -23,7 +23,7 @@
   })
 
   const addCity = async () => {
-    await $fetch('/api/city', {
+    await $fetch('api/city', {
       body: {
         label: city.value.label,
         code: city.value.code,

@@ -23,7 +23,7 @@ const emit = defineEmits([
 ])
 
 const fetchList = async (value) => {
-  let scList = await $fetch('/api/sc-list?page=' + value)
+  let scList = await $fetch('api/sc-list?page=' + value)
   let paginate = scList.pop()
   emit("paginate-next-previous", paginate)
   return scList
