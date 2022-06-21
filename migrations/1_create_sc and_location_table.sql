@@ -57,5 +57,6 @@ CREATE TABLE IF NOT EXISTS sc (
             ON DELETE SET NULL
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id ON sc (name, location_id)
+CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id
+    ON sc (name, location_id);
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

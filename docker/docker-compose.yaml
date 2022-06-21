@@ -31,9 +31,11 @@ services:
     build:
       context: ${PATH_TO_PROJECT}
       dockerfile: docker/Dockerfile-nuxt
+      args:
+        API_BASE_URL: ${API_BASE_URL}
     restart: always
     environment:
-      API_BASE_URL: http://api.doctu.ru
+      API_BASE_URL: ${API_BASE_URL}
     networks:
       sc_network:
         ipv4_address: 172.172.0.4

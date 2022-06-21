@@ -23,7 +23,7 @@
     <label>
       <span>Город:</span>
       <select v-model="sc.city">
-        <option v-for="city in cityMenu" :value="city.label">{{ city.label }}</option>
+        <option v-for="city in cityMenu" :value="city">{{ city.label }}</option>
       </select>
     </label>
     <label>
@@ -34,6 +34,12 @@
       <span>Метро:</span>
       <input type="text" size="50" v-model="sc.underground">
     </label>
+    <label v-if="undergrounds">
+      <span>Метро:</span>
+      <select v-model="sc.underground">
+        <option v-for="underground in undergrounds" :value="underground.label">{{ underground.label }}</option>
+      </select>
+    </label>
     <label>
       <input type="submit" value="Добавить">
     </label>
@@ -42,6 +48,7 @@
 
 <script setup lang="ts">
   const route = useRoute()
+  const undergrounds = ref()
 
   const cityMenu = await $fetch('/api/city')
 
@@ -51,10 +58,12 @@
     phone: '',
     email: '',
     site: '',
-    city: cityMenu[0].label,
+    city: cityMenu[0],
     address: '',
     underground: '',
   })
+
+  console.log(cityMenu)
 
   const addSc = async () => {
     await $fetch('/api/sc', {
@@ -78,12 +87,16 @@
         sc.value.phone = ''
         sc.value.email = ''
         sc.value.site = ''
-        sc.value.city = ''
         sc.value.address = ''
         sc.value.underground = ''
       })
       .catch((err) => console.log(err))
   }
+
+  watch(() => sc.value.city, async (value) => {
+    undergrounds.value = await $fetch(`/api/underground?city=${value.id}`)
+  })
+
 </script>
 
 <style scoped lang="scss">
@@ -104,6 +117,9 @@
       textarea {
         width: 30rem;
       }
+      select {
+        width: 30rem;
+      }
     }
   }
   @media (max-width: 670px) {
@@ -111,6 +127,9 @@
       width: 23rem;
     }
     textarea {
+      width: 23rem;
+    }
+    select {
       width: 23rem;
     }
   }

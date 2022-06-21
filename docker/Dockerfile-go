@@ -16,5 +16,6 @@ COPY . .
 RUN rm -rf nuxt-app && rm -rf docker && go build -v
 
 COPY docker/nginx/site.conf /etc/nginx/conf.d/
+ENV DATABASE_URL ${DATABASE_URL}
 
 CMD "./repaircat"

@@ -1,10 +1,12 @@
 FROM node:16.15.1 as builder
 
+ARG API_BASE_URL
+
+ENV API_BASE_URL ${API_BASE_URL}
+
 WORKDIR /app
 
 COPY nuxt-app /app
-
-ENV API_BASE_URL http://api.repaircat.ru
 
 RUN yarn install && npm run build
 
@@ -16,10 +18,10 @@ RUN apt update && apt install -y \
     nano \
     net-tools
 
+ENV API_BASE_URL ${API_BASE_URL}
+
 WORKDIR /app
 
 COPY --from=builder /app/.output /app
-
-ENV API_BASE_URL http://api.repaircat.ru
 
 CMD ["node", "./server/index.mjs"]
