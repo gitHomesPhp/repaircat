@@ -47,6 +47,14 @@ func (location *Location) GetAttributes2() []any {
 }
 
 func (location *Location) ToMap() map[string]any {
+	if location.city == nil {
+		location.city = EmptyCity()
+	}
+
+	if location.underground == nil {
+		location.underground = EmptyUnderground()
+	}
+
 	return map[string]any{
 		"city":        location.city.ToMap(),
 		"address":     location.address,

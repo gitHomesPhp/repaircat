@@ -2,7 +2,7 @@
   <div class="container">
     <AppHead/>
     <AppBody>
-
+      <Sc/>
     </AppBody>
     <AppFoot/>
   </div>

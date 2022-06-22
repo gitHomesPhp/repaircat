@@ -26,6 +26,14 @@ func AddSc(context *gin.Context) {
 	}
 }
 
+func GetSc(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.Param("id"))
+
+	sc, _ := sc_repository.Find(id)
+
+	ctx.JSON(http.StatusOK, sc)
+}
+
 func getScParams(ctx *gin.Context) (name, description, phone, email, site string) {
 	name = ctx.PostForm("name")
 	description = ctx.PostForm("description")

@@ -84,3 +84,30 @@ func Flush(sc *entity.Sc) error {
 
 	return nil
 }
+
+func Find(id int) (map[string]any, error) {
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
+	sc := entity.EmptySc()
+	location := entity.EmptyLocation()
+
+	attrs := append(sc.GetAttributes2(), location.GetAttributes2()...)
+	fmt.Println(attrs)
+
+	err = conn.QueryRow(context.Background(), SelectScById, id).Scan(attrs...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	sc.AddLocation(location)
+
+	defer conn.Close(context.Background())
+
+	return sc.ToMap(), nil
+}
