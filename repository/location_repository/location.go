@@ -17,9 +17,9 @@ func Flush(location *entity.Location) (error, *entity.Location) {
 	}
 
 	_, err = conn.Exec(context.Background(), InsertLocation,
-		location.GetCity(),
+		location.GetCity().GetId(),
 		location.GetAddress(),
-		location.GetUnderGround(),
+		location.GetUnderGround().GetId(),
 	)
 
 	if err != nil {
@@ -28,7 +28,11 @@ func Flush(location *entity.Location) (error, *entity.Location) {
 
 	var id int
 
-	err = conn.QueryRow(context.Background(), GetIdByValues, location.GetCity(), location.GetAddress(), location.GetUnderGround()).Scan(&id)
+	err = conn.QueryRow(context.Background(), GetIdByValues,
+		location.GetCity().GetId(),
+		location.GetAddress(),
+		location.GetUnderGround().GetId(),
+	).Scan(&id)
 
 	if err != nil {
 		return err, nil

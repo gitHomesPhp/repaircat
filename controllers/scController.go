@@ -7,6 +7,7 @@ import (
 	"github.com/gitHomesPhp/repaircat/repository/location_repository"
 	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
 	"net/http"
+	"strconv"
 )
 
 func AddSc(context *gin.Context) {
@@ -34,9 +35,15 @@ func getScParams(ctx *gin.Context) (name, description, phone, email, site string
 	return
 }
 
-func getLocationParams(ctx *gin.Context) (city string, address string, underground string) {
-	city = ctx.PostForm("city")
+func getLocationParams(ctx *gin.Context) (city *entity.City, address string, underground *entity.Underground) {
+	cityId, _ := strconv.Atoi(ctx.PostForm("city"))
+	city = entity.EmptyCity()
+	city.SetId(cityId)
+
 	address = ctx.PostForm("address")
-	underground = ctx.PostForm("underground")
+
+	undergroundId, _ := strconv.Atoi(ctx.PostForm("underground"))
+	underground = entity.EmptyUnderground()
+	underground.SetId(undergroundId)
 	return
 }

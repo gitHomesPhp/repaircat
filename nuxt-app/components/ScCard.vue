@@ -5,9 +5,7 @@
       <h3 class="sc-card__name">
         {{ name }}
       </h3>
-      <div class="sc-card__description">
-        {{ description }}
-      </div>
+      <div class="sc-card__description" v-html="description"></div>
       <div class="sc-card__bottom">
         <div class="sc-card__location location">
           <div class="location__item">
@@ -23,7 +21,7 @@
               <img src="~/assets/img/underground_icon.png" alt="">
             </span>
             <span>
-              {{ location.underground }}
+              {{ location.underground.label }}
             </span>
           </div>
         </div>
@@ -72,12 +70,17 @@
 
 <style scoped lang="scss">
   .wrapper {
-    min-width: 510px;
     margin-top: .4rem;
     margin-bottom: .4rem;
     display: flex;
     flex-direction: row;
     align-items: center;
+    @media(max-width: 510px) {
+      flex-direction: column;
+      &>img {
+        margin-bottom: .4rem;
+      }
+    }
     &>img {
       width: 100px;
       height: 75px;
@@ -106,6 +109,9 @@
     &__bottom {
       display: flex;
       justify-content: space-between;
+      @media(max-width: 510px) {
+        flex-direction: column;
+      }
     }
     &__name {
       font-weight: bolder;

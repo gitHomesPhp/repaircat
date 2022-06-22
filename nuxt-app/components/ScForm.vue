@@ -30,19 +30,22 @@
       <span>Адресс:</span>
       <input type="text" size="50" v-model="sc.address">
     </label>
-    <label>
+    <!--label>
       <span>Метро:</span>
       <input type="text" size="50" v-model="sc.underground">
-    </label>
-    <label v-if="undergrounds">
+    </label-->
+    <label>
       <span>Метро:</span>
       <select v-model="sc.underground">
-        <option v-for="underground in undergrounds" :value="underground.label">{{ underground.label }}</option>
+        <option v-for="underground in undergrounds" :value="underground">{{ underground.label }}</option>
       </select>
     </label>
-    <label>
-      <input type="submit" value="Добавить">
-    </label>
+    <div>
+      <label>
+        <input type="submit" value="Добавить">
+      </label>
+    </div>
+
   </form>
 </template>
 
@@ -60,10 +63,10 @@
     site: '',
     city: cityMenu[0],
     address: '',
-    underground: '',
+    underground: {},
   })
 
-  console.log(cityMenu)
+  undergrounds.value = await $fetch(`/api/underground?city=${cityMenu[0].id}`)
 
   const addSc = async () => {
     await $fetch('/api/sc', {
@@ -73,22 +76,22 @@
         phone: sc.value.phone,
         email: sc.value.email,
         site: sc.value.site,
-        city: sc.value.city,
+        city: sc.value.city.id,
         address: sc.value.address,
-        underground: sc.value.underground,
+        underground: sc.value.underground.id,
         user: route.query.user,
         token: route.query.token,
       },
       method: 'post'
     })
       .then(() => {
-        sc.value.name = ''
-        sc.value.description = ''
-        sc.value.phone = ''
-        sc.value.email = ''
-        sc.value.site = ''
-        sc.value.address = ''
-        sc.value.underground = ''
+        //sc.value.name = ''
+        //sc.value.description = ''
+        //sc.value.phone = ''
+        //sc.value.email = ''
+        //sc.value.site = ''
+        //sc.value.address = ''
+        //sc.value.underground = ''
       })
       .catch((err) => console.log(err))
   }
@@ -118,7 +121,7 @@
         width: 30rem;
       }
       select {
-        width: 30rem;
+        width: 30.5rem;
       }
     }
   }
@@ -130,7 +133,7 @@
       width: 23rem;
     }
     select {
-      width: 23rem;
+      width: 23.5rem;
     }
   }
 
