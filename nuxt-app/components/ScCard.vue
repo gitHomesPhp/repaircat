@@ -3,7 +3,8 @@
     <img src="~/assets/img/gear_icon.png" alt="">
     <div class="sc-card">
       <h3 class="sc-card__name">
-        {{ name }}
+        <!--TODO-->
+        <NuxtLink @click.prevent.stop :to="`/spb/sc/${name}`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
       </h3>
       <div class="sc-card__description" v-html="description"></div>
       <div class="sc-card__bottom">
@@ -39,7 +40,7 @@
             <img src="~/assets/img/site_icon.png" alt="">
           </span>
           <span>
-            <a :href="site">{{ site }}</a>
+            <a @click.stop :href="site" target="_blank">{{ site }}</a>
           </span>
           </div>
           <div class="sc-card__phone contact__item">

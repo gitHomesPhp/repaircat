@@ -1,9 +1,13 @@
 <template>
   <div class="paginator" :class="type + '-paginator'">
     <div class="paginator__wrapper">
-      <span><span v-if="previous" class="pointer" @click="previousPage">Предыдущая</span></span>
+      <span>
+        <a v-if="previous" class="pointer" @click.prevent="previousPage">Предыдущая</a>
+      </span>
       <span class="paginator__page">{{ page }}</span>
-      <span><span v-if="next" class="pointer" @click="nextPage">Следующая</span></span>
+      <span>
+        <a v-if="next" class="pointer" @click.prevent="nextPage">Следующая</a>
+      </span>
     </div>
   </div>
 </template>
@@ -32,6 +36,10 @@
 </script>
 
 <style scoped lang="scss">
+a {
+  text-decoration: none;
+  color: #0070c0;
+}
 .paginator {
   display: flex;
   &__wrapper {

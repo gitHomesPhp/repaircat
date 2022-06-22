@@ -26,5 +26,6 @@
     padding-bottom: 1rem;
     border-top: #cccccc 1px solid;
     border-bottom: #cccccc 1px solid;
+    flex-grow: 1;
   }
 </style>

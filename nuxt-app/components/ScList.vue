@@ -9,17 +9,25 @@
       :email="sc.email"
       :site="sc.site"
       :location="sc.location"
+      @click="openSc(sc.name)"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
+const router = useRouter()
+
+const openSc = (slug) => {
+  //TODO
+  router.push(`/spb/sc/${slug}`)
+}
+
 const props = defineProps({
   page: { type: Number, required: true }
 })
 
 const emit = defineEmits([
-  'paginate-next-previous'
+  'paginate-next-previous',
 ])
 
 const fetchList = async (value) => {

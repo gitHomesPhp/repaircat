@@ -24,6 +24,8 @@ export default {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
     &__logo {
       width: 100%;
       background: #000;

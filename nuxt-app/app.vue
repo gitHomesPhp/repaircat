@@ -11,6 +11,9 @@ useHead({
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
   description: 'Ремонт техники',
+  htmlAttrs: {
+    lang: 'ru'
+  },
   link: [
     { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
     { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
