@@ -48,7 +48,7 @@
   }
 
   const previous = ref(false)
-  const next = ref(true)
+  const next = ref(false)
 
   const setPaginateNextPrevious = (data) => {
     previous.value = !!data.previous
