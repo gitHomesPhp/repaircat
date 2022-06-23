@@ -14,9 +14,20 @@
           <span>Сайт:</span>
         </div>
         <div class="contact__column contact__column--value">
-          <span>{{sc.phone}}</span>
-          <span>{{sc.email}}</span>
-          <span>{{sc.site}}</span>
+          <span class="contact__item">{{sc.phone || 'Нет информации'}}</span>
+          <span class="contact__item">{{sc.email || 'Нет информации'}}</span>
+          <span class="contact__item">{{sc.site || 'Нет информации'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc__body">
+      <div class="sc__meta-info">
+        <div>рейтинг 1000</div>
+      </div>
+      <div class="sc__line"></div>
+      <div class="sc__main-info">
+        <div @click="toggleText" class="sc__description pointer" :class="{'hidden': isHidden}">
+          <div  v-html="sc.description"></div>
         </div>
       </div>
     </div>
@@ -27,7 +38,9 @@
   const route = useRoute()
 
   const title = ref('Сервисный центр')
-  const { data: sc} = await useFetch(`/api/sc/1`)
+  const { data: sc} = await useFetch(`/api/sc/${route.params.id}`)
+  const isHidden = ref(true)
+  const toggleText = () => {isHidden.value = !isHidden.value}
 </script>
 
 <style scoped lang="scss">
@@ -63,6 +76,57 @@
         padding-bottom: 1rem;
       }
     }
+    &__body {
+      display: flex;
+      border-top: #cccccc 1px solid;
+      justify-content: space-around;
+      @media (max-width: 510px) {
+        flex-direction: column;
+      }
+    }
+    &__main-info {
+      display: flex;
+      flex-direction: column;
+      max-width: 66%;
+      color: #5a5c61;
+      font-family: Roboto,Arial,sans-serif;
+      font-size: 1rem;;
+      padding-top: 1rem;
+      @media (max-width: 510px) {
+        max-width: 100%;
+      }
+    }
+    &__line {
+      border-right: #cccccc 1px solid;
+      @media (max-width: 510px) {
+        border-right: none;
+        border-bottom: #cccccc 1px solid;
+      }
+    }
+    &__meta-info {
+      padding-top: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    &__description {
+
+    }
+  }
+  .hidden {
+    overflow: hidden;
+    position: relative;
+    height: 150px;
+    &:after {
+      content: "";
+      text-align: right;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 2.0em;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 100%);
+      pointer-events: none;
+    }
   }
   .contact {
     &__column {
@@ -76,6 +140,9 @@
       &--value {
         color: #6c757d;
       }
+    }
+    &__item {
+
     }
   }
 </style>

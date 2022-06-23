@@ -4,7 +4,7 @@
     <div class="sc-card">
       <h3 class="sc-card__name">
         <!--TODO-->
-        <NuxtLink @click.prevent.stop :to="`/spb/sc/${name}`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
+        <NuxtLink @click.prevent.stop :to="`/spb/sc/${id}-service-center`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
       </h3>
       <div class="sc-card__description" v-html="description"></div>
       <div class="sc-card__bottom">
@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
   defineProps({
+    id: { required: true, type: Number },
     name: { required: true, type: String },
     description: { required: true, type: String },
     phone: { required: true, type: String },
@@ -120,6 +121,20 @@
     &__description {
       padding: .5rem 0;
       font-size: medium;
+      overflow: hidden;
+      position: relative;
+      height: 112px;
+      &:after {
+        content: "";
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 6.5rem;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 100%);
+        pointer-events: none;
+      }
     }
     &__contact {
       display: flex;

@@ -4,12 +4,13 @@
       v-for="sc in scList"
       :key="sc.id"
       :name="sc.name"
+      :id="sc.id"
       :description="sc.description"
       :phone="sc.phone"
       :email="sc.email"
       :site="sc.site"
       :location="sc.location"
-      @click="openSc(sc.name)"
+      @click="openSc(sc.id)"
     />
   </div>
 </template>
@@ -17,9 +18,9 @@
 <script lang="ts" setup>
 const router = useRouter()
 
-const openSc = (slug) => {
+const openSc = (id) => {
   //TODO
-  router.push(`/spb/sc/${slug}`)
+  router.push(`/spb/sc/${id}-service-center`)
 }
 
 const props = defineProps({
