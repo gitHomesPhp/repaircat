@@ -14,4 +14,5 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         API: process.env.API_BASE_URL
     },
+    buildModules: ['@pinia/nuxt'],
 })

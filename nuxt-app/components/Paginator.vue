@@ -2,36 +2,35 @@
   <div class="paginator" :class="type + '-paginator'">
     <div class="paginator__wrapper">
       <span>
-        <a v-if="previous" class="pointer" @click.prevent="previousPage">Предыдущая</a>
+        <NuxtLink v-if="canPreviousPage"
+                  :to="`/?page=${previousPage}`"
+                  class="pointer"
+        >
+          Предыдущая
+        </NuxtLink>
       </span>
-      <span class="paginator__page">{{ page }}</span>
+      <span class="paginator__page">{{ currentPage }}</span>
       <span>
-        <a v-if="next" class="pointer" @click.prevent="nextPage">Следующая</a>
+        <NuxtLink v-if="canNextPage"
+                  :to="`/?page=${nextPage}`"
+                  class="pointer"
+        >
+          Следующая
+        </NuxtLink>
       </span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import {useScPaginatorStore} from "~/stores/scPaginatorStore";
+  import {storeToRefs} from "pinia";
+
+  const { canPreviousPage, canNextPage, nextPage, previousPage, currentPage } = storeToRefs(useScPaginatorStore())
+
   const props = defineProps({
     type: { type: String },
-    page: { type: Number, default: 1},
-    next: {},
-    previous: {},
   })
-  const emit = defineEmits([
-      'next-page',
-      'previous-page',
-  ])
-
-  const nextPage = () => {
-      emit('next-page')
-  }
-  const previousPage = () => {
-    if (props.page > 1) {
-      emit('previous-page')
-    }
-  }
 
 </script>
 

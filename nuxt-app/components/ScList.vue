@@ -16,6 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+import {useScPaginatorStore} from "~/stores/scPaginatorStore";
+import {storeToRefs} from "pinia";
+
 const router = useRouter()
 
 const openSc = (id) => {
@@ -23,30 +26,7 @@ const openSc = (id) => {
   router.push(`/spb/sc/${id}-service-center`)
 }
 
-const props = defineProps({
-  page: { type: Number, required: true }
-})
-
-const emit = defineEmits([
-  'paginate-next-previous',
-])
-
-const fetchList = async (value) => {
-  let scList = await $fetch('/api/sc-list?page=' + value)
-  let paginate = scList.pop()
-  emit("paginate-next-previous", paginate)
-  return scList
-}
-
-const data = await fetchList(props.page)
-
-
-const scList = ref(data)
-
-watch(() => props.page, async (value) => {
-  scList.value = await fetchList(value)
-})
-
+const {scList} = storeToRefs(useScPaginatorStore())
 </script>
 
 <style scoped>

@@ -13,10 +13,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Head"
-}
+<script lang="ts" setup>
+
 </script>
 
 <style scoped lang="scss">
@@ -26,6 +24,7 @@ export default {
     margin-bottom: 1rem;
     position: sticky;
     top: 0;
+    z-index: 999;
     &__logo {
       width: 100%;
       background: #000;

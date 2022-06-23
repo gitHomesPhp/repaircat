@@ -81,7 +81,7 @@
       border-top: #cccccc 1px solid;
       justify-content: space-around;
       @media (max-width: 510px) {
-        flex-direction: column;
+        flex-direction: column-reverse;
       }
     }
     &__main-info {
@@ -113,20 +113,8 @@
     }
   }
   .hidden {
-    overflow: hidden;
     position: relative;
-    height: 150px;
-    &:after {
-      content: "";
-      text-align: right;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      height: 2.0em;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 100%);
-      pointer-events: none;
-    }
+
   }
   .contact {
     &__column {

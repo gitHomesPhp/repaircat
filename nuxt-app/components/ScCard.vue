@@ -111,12 +111,14 @@
     &__bottom {
       display: flex;
       justify-content: space-between;
+      font-size: .9rem;
       @media(max-width: 510px) {
         flex-direction: column;
       }
     }
     &__name {
       font-weight: bolder;
+      font-size: 1.5rem;
     }
     &__description {
       padding: .5rem 0;
@@ -124,6 +126,7 @@
       overflow: hidden;
       position: relative;
       height: 112px;
+      color: #5a5c61;
       &:after {
         content: "";
         text-align: right;
