@@ -31,21 +31,27 @@
         </div>
       </div>
     </div>
-    <div class="sc__map">
-      <client-only>
-        <yandex-map
-            v-if="showMap"
-            :coords="coords"
-            zoom=10
-            @click="changeCoords"
-        >
-          <ymap-marker
+    <div class="sc__address">
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, tempore?
+      </div>
+      <div class="sc__map">
+        <client-only>
+          <yandex-map
+              v-if="showMap"
               :coords="coords"
-              marker-id="123123"
-              hint-content="some hint"
-          />
-        </yandex-map>
-      </client-only>
+              zoom=10
+              @click="changeCoords"
+          >
+            <ymap-marker
+                :coords="coords"
+                marker-id="123123"
+                hint-content="some hint"
+            />
+          </yandex-map>
+        </client-only>
+      </div>
+
     </div>
   </div>
 </template>
@@ -59,7 +65,7 @@
   const toggleText = () => {isHidden.value = !isHidden.value}
   const showMap  = ref(false)
 
-  const coords = ref([54.82896654088406, 39.831893822753904])
+  const coords = ref([60.066949, 30.336313])
   const changeCoords = (e) => {
     coords.value =  e.get('coords');
   }
@@ -138,7 +144,14 @@
 
     }
     &__map {
-      height: 300px;
+      height: 320px;
+    }
+    &__address {
+      margin-top: 1rem;
+      display: flex;
+      &>div {
+        width: 50%;
+      }
     }
   }
   .hidden {
