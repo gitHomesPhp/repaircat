@@ -40,7 +40,7 @@
           <yandex-map
               v-if="showMap"
               :coords="coords"
-              zoom=10
+              zoom=16
               @click="changeCoords"
           >
             <ymap-marker

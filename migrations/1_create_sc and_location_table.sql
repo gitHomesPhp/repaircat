@@ -82,6 +82,9 @@ CREATE TABLE IF NOT EXISTS sc_service (
 );
 
 ALTER TABLE location
-    ALTER COLUMN underground_id
-    SET DEFAULT NULL;
+    ALTER COLUMN underground_id SET DEFAULT NULL,
+    ADD COLUMN latitude VARCHAR ( 31 ),
+    ADD COLUMN longitude VARCHAR ( 31 )
+;
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
