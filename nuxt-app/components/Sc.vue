@@ -70,7 +70,7 @@
     coords.value =  e.get('coords');
   }
   onMounted(() => {
-    setTimeout(() => {showMap.value = true}, 0)
+    setTimeout(() => {showMap.value = true}, 150)
 
   })
 </script>
