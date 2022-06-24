@@ -60,3 +60,28 @@ CREATE TABLE IF NOT EXISTS sc (
 CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id
     ON sc (name, location_id);
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+TODO
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+CREATE TABLE IF NOT EXISTS service (
+    id BIGSERIAL PRIMARY KEY,
+    label VARCHAR ( 255 )
+);
+
+CREATE TABLE IF NOT EXISTS sc_service (
+    sc_id BIGINT,
+    service_id BIGINT,
+    CONSTRAINT fk_sc_service_sc
+        FOREIGN KEY (sc_id)
+        REFERENCES sc(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_sc_service_service
+        FOREIGN KEY (service_id)
+        REFERENCES service(id)
+        ON DELETE CASCADE
+);
+
+ALTER TABLE location
+    ALTER COLUMN underground_id
+    SET DEFAULT NULL;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

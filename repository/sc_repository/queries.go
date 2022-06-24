@@ -44,7 +44,7 @@ SELECT
     COALESCE(underground.label, '') as underground
 FROM sc LEFT JOIN location ON location_id = location.id
 	JOIN city on location.city_id = city.id
-	JOIN underground on location.underground_id = underground.id
+	LEFT JOIN underground on location.underground_id = underground.id
 ORDER BY sc.id ASC
 LIMIT $1
 OFFSET $2

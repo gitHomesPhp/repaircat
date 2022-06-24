@@ -52,6 +52,7 @@
 <script setup lang="ts">
   const route = useRoute()
   const undergrounds = ref()
+  const NO_UNDERGROUND = 0
 
   const cityMenu = await $fetch('/api/city')
 
@@ -78,7 +79,7 @@
         site: sc.value.site,
         city: sc.value.city.id,
         address: sc.value.address,
-        underground: sc.value.underground.id,
+        underground: sc.value.underground.id ?? NO_UNDERGROUND,
         user: route.query.user,
         token: route.query.token,
       },
