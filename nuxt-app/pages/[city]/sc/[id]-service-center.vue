@@ -2,7 +2,7 @@
   <div class="container">
     <AppHead/>
     <AppBody>
-      <Sc/>
+      <Sc />
     </AppBody>
     <AppFoot/>
   </div>
@@ -10,7 +10,6 @@
 
 <script lang="ts" setup>
   const route = useRoute();
-
 
 </script>
 

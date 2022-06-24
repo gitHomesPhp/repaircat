@@ -31,6 +31,22 @@
         </div>
       </div>
     </div>
+    <div class="sc__map">
+      <client-only>
+        <yandex-map
+            v-if="showMap"
+            :coords="coords"
+            zoom=10
+            @click="changeCoords"
+        >
+          <ymap-marker
+              :coords="coords"
+              marker-id="123123"
+              hint-content="some hint"
+          />
+        </yandex-map>
+      </client-only>
+    </div>
   </div>
 </template>
 
@@ -41,6 +57,16 @@
   const { data: sc} = await useFetch(`/api/sc/${route.params.id}`)
   const isHidden = ref(true)
   const toggleText = () => {isHidden.value = !isHidden.value}
+  const showMap  = ref(false)
+
+  const coords = ref([54.82896654088406, 39.831893822753904])
+  const changeCoords = (e) => {
+    coords.value =  e.get('coords');
+  }
+  onMounted(() => {
+    setTimeout(() => {showMap.value = true}, 0)
+
+  })
 </script>
 
 <style scoped lang="scss">
@@ -110,6 +136,9 @@
     }
     &__description {
 
+    }
+    &__map {
+      height: 300px;
     }
   }
   .hidden {

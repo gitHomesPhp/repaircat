@@ -15,4 +15,7 @@ export default defineNuxtConfig({
         API: process.env.API_BASE_URL
     },
     buildModules: ['@pinia/nuxt'],
+    plugins: [
+        { src: '~/plugins/ymapPlugin.ts',  mode: 'client' }
+    ]
 })

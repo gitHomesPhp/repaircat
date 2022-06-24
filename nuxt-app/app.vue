@@ -35,4 +35,7 @@ useHead({
   flex-direction: column;
   min-height: 100%;
 }
+.ymap-container {
+  height: 100%;
+}
 </style>

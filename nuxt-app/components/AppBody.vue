@@ -18,6 +18,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0 1rem;
+    background-color: #fafafa;
   }
   .content {
     width: 100%;

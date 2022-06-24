@@ -91,6 +91,7 @@
   .sc-card {
     cursor: pointer;
     border: 1px solid #eaeaea;
+    background-color: white;
     padding: 15px;
     border-radius: 5px;
     text-align: left;
