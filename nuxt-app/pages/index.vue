@@ -2,9 +2,11 @@
   <div class="container">
     <AppHead />
     <AppBody>
-      <Paginator type="top"/>
-      <ScList />
-      <Paginator type="bottom"/>
+      <div>
+        <Paginator type="top"/>
+        <ScList />
+        <Paginator type="bottom"/>
+      </div>
     </AppBody>
     <AppFoot />
   </div>

@@ -5,6 +5,8 @@ type Location struct {
 	city        *City
 	address     string
 	underground *Underground
+	latitude    string
+	longitude   string
 }
 
 func NewLocation(city *City, address string, underground *Underground) *Location {
@@ -21,6 +23,8 @@ func EmptyLocation() *Location {
 		city:        nil,
 		address:     "",
 		underground: nil,
+		latitude:    "",
+		longitude:   "",
 	}
 }
 
@@ -32,7 +36,7 @@ func (location *Location) GetId() int {
 	return location.id
 }
 
-func (location *Location) GetAttributes2() []any {
+func (location *Location) GetAttributes() []any {
 	if location.city == nil {
 		location.city = EmptyCity()
 	}
@@ -42,7 +46,12 @@ func (location *Location) GetAttributes2() []any {
 	}
 
 	return []any{
-		&location.id, &location.city.label, &location.address, &location.underground.label,
+		&location.id,
+		&location.city.label,
+		&location.address,
+		&location.underground.label,
+		&location.latitude,
+		&location.longitude,
 	}
 }
 
@@ -59,6 +68,8 @@ func (location *Location) ToMap() map[string]any {
 		"city":        location.city.ToMap(),
 		"address":     location.address,
 		"underground": location.underground.ToMap(),
+		"latitude":    location.latitude,
+		"longitude":   location.longitude,
 	}
 }
 

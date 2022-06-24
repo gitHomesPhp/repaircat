@@ -17,7 +17,9 @@ const SelectScById = `
     	COALESCE(location.id, 0) as location_id,
     	COALESCE(city.label, '') as city,
     	COALESCE(address, '') as address,
-    	COALESCE(underground.label, '') as underground
+    	COALESCE(underground.label, '') as underground,
+		COALESCE(latitude, '') as latitude,
+		COALESCE(longitude, '') as longitude
 	FROM sc LEFT JOIN location ON location_id = location.id
 		JOIN city on location.city_id = city.id
 		JOIN underground on location.underground_id = underground.id

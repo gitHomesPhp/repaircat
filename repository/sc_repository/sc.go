@@ -28,7 +28,9 @@ func List(page int) ([]map[string]any, error) {
 		sc := entity.EmptySc()
 		location := entity.EmptyLocation()
 
-		attrs := append(sc.GetAttributes2(), location.GetAttributes2()...)
+		locAttr := deleteElemSlice(deleteElemSlice(location.GetAttributes(), 5), 4)
+
+		attrs := append(sc.GetAttributes2(), locAttr...)
 		err := rows.Scan(attrs...)
 
 		if location.GetId() != 0 {
@@ -96,8 +98,7 @@ func Find(id int) (map[string]any, error) {
 	sc := entity.EmptySc()
 	location := entity.EmptyLocation()
 
-	attrs := append(sc.GetAttributes2(), location.GetAttributes2()...)
-	fmt.Println(attrs)
+	attrs := append(sc.GetAttributes2(), location.GetAttributes()...)
 
 	err = conn.QueryRow(context.Background(), SelectScById, id).Scan(attrs...)
 
@@ -110,4 +111,10 @@ func Find(id int) (map[string]any, error) {
 	defer conn.Close(context.Background())
 
 	return sc.ToMap(), nil
+}
+
+func deleteElemSlice(s []any, n int) []any {
+	s = append(s[:n], s[n+1:]...)
+
+	return s
 }

@@ -61,7 +61,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id
     ON sc (name, location_id);
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-/*TODO*/
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 CREATE TABLE IF NOT EXISTS service (
     id BIGSERIAL PRIMARY KEY,
@@ -86,5 +85,4 @@ ALTER TABLE location
     ADD COLUMN latitude VARCHAR ( 31 ),
     ADD COLUMN longitude VARCHAR ( 31 )
 ;
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

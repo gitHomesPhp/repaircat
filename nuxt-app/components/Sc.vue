@@ -65,7 +65,7 @@
   const toggleText = () => {isHidden.value = !isHidden.value}
   const showMap  = ref(false)
 
-  const coords = ref([60.066949, 30.336313])
+  const coords = ref([sc.value.location.latitude, sc.value.location.longitude])
   const changeCoords = (e) => {
     coords.value =  e.get('coords');
   }
