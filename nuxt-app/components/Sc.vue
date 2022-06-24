@@ -152,6 +152,12 @@
       &>div {
         width: 50%;
       }
+      @media (max-width: 510px) {
+        flex-direction: column;
+        &>div {
+          width: 100%;
+        }
+      }
     }
   }
   .hidden {
