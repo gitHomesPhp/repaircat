@@ -61,7 +61,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id
     ON sc (name, location_id);
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-TODO
+/*TODO*/
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 CREATE TABLE IF NOT EXISTS service (
     id BIGSERIAL PRIMARY KEY,
