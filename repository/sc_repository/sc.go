@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/entity"
+	"github.com/gitHomesPhp/repaircat/repository/underground_repository"
 	"github.com/jackc/pgx/v4"
 	"os"
 )
@@ -23,6 +24,8 @@ func List(page int) ([]map[string]any, error) {
 	rows, _ := conn.Query(context.Background(), SelectScWithLocationPageCursor, COUNT, COUNT*page-COUNT)
 
 	var scList []map[string]any
+	var scSlice []*entity.Sc
+	var locations []*entity.Location
 
 	for rows.Next() {
 		sc := entity.EmptySc()
@@ -41,7 +44,14 @@ func List(page int) ([]map[string]any, error) {
 			return nil, err
 		}
 
-		scList = append(scList, sc.ToMap())
+		locations = append(locations, location)
+		scSlice = append(scSlice, sc)
+	}
+
+	underground_repository.GetUndergroundsOfLocations(locations)
+
+	for i := 1; i < len(scSlice); i++ {
+		scList = append(scList, scSlice[i].ToMap())
 	}
 
 	var next int
@@ -101,6 +111,8 @@ func Find(id int) (map[string]any, error) {
 	attrs := append(sc.GetAttributes2(), location.GetAttributes()...)
 
 	err = conn.QueryRow(context.Background(), SelectScById, id).Scan(attrs...)
+
+	underground_repository.GetUndergroundsOfLocations([]*entity.Location{location})
 
 	if err != nil {
 		return nil, err

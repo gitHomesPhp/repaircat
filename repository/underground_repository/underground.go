@@ -36,3 +36,39 @@ func GetUndergroundByCityId(cityId int) ([]map[string]any, error) {
 
 	return undergrounds, nil
 }
+
+func GetUndergroundsOfLocations(locations []*entity.Location) {
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
+	var locationsIds []int
+
+	for i := 0; i < len(locations); i++ {
+		locationsIds = append(locationsIds, locations[i].GetId())
+	}
+
+	rows, err := conn.Query(context.Background(), SelectUndergroundsOfLocations, locationsIds)
+
+	for rows.Next() {
+		underground := entity.EmptyUnderground()
+
+		var locId int
+		attrs := underground.GetAttributes()
+		attrs = append(attrs, &locId)
+
+		rows.Scan(attrs...)
+
+		for i := 0; i < len(locations); i++ {
+			if locations[i].GetId() == locId {
+				locations[i].AddUnderground(underground)
+				break
+			}
+		}
+	}
+
+	defer conn.Close(context.Background())
+}

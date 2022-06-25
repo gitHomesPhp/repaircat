@@ -38,10 +38,13 @@
           <span class="location-info__header">Аддрес:</span>
           <span class="location-info__value">{{ sc.location.address }}</span>
         </div>
-        <div class="sc__location-address location-info">
+        <div v-if="sc.location.undergrounds.length"
+             v-for="underground in sc.location.undergrounds"
+             class="sc__location-address location-info"
+        >
           <img src="~/assets/img/underground_icon.png" alt="">
           <span class="location-info__header">Метро:</span>
-          <span class="location-info__value">{{ sc.location.underground.label }}</span>
+          <span class="location-info__value">{{ underground.label }}</span>
         </div>
       </div>
       <div class="sc__map">
@@ -60,7 +63,6 @@
           </yandex-map>
         </client-only>
       </div>
-
     </div>
   </div>
 </template>

@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS underground (
 
    CONSTRAINT fk_underground_city
        FOREIGN KEY (city_id)
-           REFERENCES city(id)
-           ON DELETE CASCADE
+       REFERENCES city(id)
+       ON DELETE CASCADE
 )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS location (
 
     CONSTRAINT fk_location_city
         FOREIGN KEY (city_id)
-            REFERENCES city(id)
-            ON DELETE SET NULL,
+        REFERENCES city(id)
+        ON DELETE SET NULL,
 
     CONSTRAINT fk_location_underground
         FOREIGN KEY (underground_id)
-            REFERENCES underground(id)
-            ON DELETE SET NULL
+        REFERENCES underground(id)
+        ON DELETE SET NULL
 );
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS sc (
 
     CONSTRAINT fk_sc_location
         FOREIGN KEY (location_id)
-            REFERENCES location(id)
-            ON DELETE SET NULL
+        REFERENCES location(id)
+        ON DELETE SET NULL
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_idx_sc_name_location_id
@@ -89,13 +89,44 @@ ALTER TABLE location
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-/*TODO*/
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+CREATE TABLE IF NOT EXISTS municipalities(
+     id BIGSERIAL PRIMARY KEY,
+     label VARCHAR ( 63 ) NOT NULL,
+     city_id BIGINT,
+
+     CONSTRAINT fk_municipalities_city
+         FOREIGN KEY (city_id)
+         REFERENCES city(id)
+         ON DELETE CASCADE
+);
+
+CREATE TYPE region_type AS ENUM ('underground', 'municipality');
+
+CREATE TABLE IF NOT EXISTS location_regions(
+    location_id BIGINT,
+    region_type region_type,
+    region_id BIGINT,
+
+    CONSTRAINT fk_location_regions_location
+        FOREIGN KEY (location_id)
+        REFERENCES location(id)
+        ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS visitor(
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR ( 63 ),
     phone VARCHAR ( 31 ) UNIQUE,
-    email VARCHAR ( 255 ) UNIQUE
+    email VARCHAR ( 255 ) UNIQUE,
+    password VARCHAR (127)
+);
+
+CREATE TABLE IF NOT EXISTS manager(
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR ( 63 ),
+    sc_id BIGINT,
+    password VARCHAR (127)
 );
 
 CREATE TABLE IF NOT EXISTS review(
@@ -112,4 +143,29 @@ CREATE TABLE IF NOT EXISTS review(
         REFERENCES visitor(id)
         ON DELETE SET NULL
 );
+
+CREATE TABLE IF NOT EXISTS review_answer(
+     id BIGSERIAL PRIMARY KEY,
+     text TEXT NOT NULL,
+     manager_id BIGINT NOT NULL,
+     created_at TIMESTAMP WITH TIME ZONE,
+     updated_at TIMESTAMP WITH TIME ZONE,
+     deleted_at TIMESTAMP WITH TIME ZONE,
+
+     CONSTRAINT fk_review_answer_manager
+        FOREIGN KEY (manager_id)
+        REFERENCES manager(id)
+);
+
+INSERT INTO location_regions(
+    location_id,
+    region_type,
+    region_id
+)
+SELECT
+    id as location_id,
+    'underground' as region_type,
+    underground_id as region_id
+FROM location
+;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

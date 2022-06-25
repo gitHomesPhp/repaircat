@@ -17,12 +17,15 @@
               {{ location.address }}
             </span>
           </div>
-          <div class="location__item">
+          <div v-if="location.undergrounds.length"
+               v-for="underground in location.undergrounds"
+               class="location__item"
+          >
             <span class="location__image">
               <img src="~/assets/img/underground_icon.png" alt="">
             </span>
             <span>
-              {{ location.underground.label }}
+              {{ underground.label }}
             </span>
           </div>
         </div>
