@@ -92,7 +92,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 1rem;
+      padding-bottom: .5rem;
       @media (max-width: 510px) {
         flex-direction: column;
       }
@@ -133,8 +133,8 @@
       color: #5a5c61;
       font-family: Roboto,Arial,sans-serif;
       font-size: 1rem;;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
       @media (max-width: 510px) {
         max-width: 100%;
       }
@@ -147,10 +147,10 @@
       }
     }
     &__meta-info {
-      padding-top: 1rem;
+      padding-top: .5rem;
       display: flex;
       flex-direction: column;
-      padding-bottom: 1rem;
+      padding-bottom: .5rem;
     }
     &__description {
 
@@ -159,7 +159,7 @@
       height: 320px;
     }
     &__address {
-      margin-top: 1rem;
+      margin-top: .5rem;
       display: flex;
       &>div {
         width: 50%;
