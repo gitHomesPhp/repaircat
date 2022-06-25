@@ -30,10 +30,6 @@
       <span>Адресс:</span>
       <input type="text" size="50" v-model="sc.address">
     </label>
-    <!--label>
-      <span>Метро:</span>
-      <input type="text" size="50" v-model="sc.underground">
-    </label-->
     <label>
       <span>Метро:</span>
       <select v-model="sc.underground">

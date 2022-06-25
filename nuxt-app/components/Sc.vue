@@ -33,7 +33,16 @@
     </div>
     <div class="sc__address">
       <div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, tempore?
+        <div class="sc__location-address location-info">
+          <img src="~/assets/img/location_icon.png" alt="">
+          <span class="location-info__header">Аддрес:</span>
+          <span class="location-info__value">{{ sc.location.address }}</span>
+        </div>
+        <div class="sc__location-address location-info">
+          <img src="~/assets/img/underground_icon.png" alt="">
+          <span class="location-info__header">Метро:</span>
+          <span class="location-info__value">{{ sc.location.underground.label }}</span>
+        </div>
       </div>
       <div class="sc__map">
         <client-only>
@@ -111,6 +120,7 @@
     &__body {
       display: flex;
       border-top: #cccccc 1px solid;
+      border-bottom: #cccccc 1px solid;
       justify-content: space-around;
       @media (max-width: 510px) {
         flex-direction: column-reverse;
@@ -124,6 +134,7 @@
       font-family: Roboto,Arial,sans-serif;
       font-size: 1rem;;
       padding-top: 1rem;
+      padding-bottom: 1rem;
       @media (max-width: 510px) {
         max-width: 100%;
       }
@@ -139,6 +150,7 @@
       padding-top: 1rem;
       display: flex;
       flex-direction: column;
+      padding-bottom: 1rem;
     }
     &__description {
 
@@ -158,6 +170,26 @@
           width: 100%;
         }
       }
+    }
+    &__location-address {
+      display: flex;
+    }
+  }
+  .location-info {
+    align-items: center;
+    padding: .3rem;
+    &__header {
+      margin-right: 1rem;
+      font-size: 1rem;
+      font-weight: bolder;
+    }
+    &__value {
+      color: #5a5c61;
+      font-size: 1rem;
+    }
+    img {
+      margin-right: .25rem;
+      width: 16px;
     }
   }
   .hidden {

@@ -70,10 +70,12 @@ CREATE TABLE IF NOT EXISTS service (
 CREATE TABLE IF NOT EXISTS sc_service (
     sc_id BIGINT,
     service_id BIGINT,
+
     CONSTRAINT fk_sc_service_sc
         FOREIGN KEY (sc_id)
         REFERENCES sc(id)
         ON DELETE CASCADE,
+
     CONSTRAINT fk_sc_service_service
         FOREIGN KEY (service_id)
         REFERENCES service(id)
@@ -85,4 +87,29 @@ ALTER TABLE location
     ADD COLUMN latitude VARCHAR ( 31 ),
     ADD COLUMN longitude VARCHAR ( 31 )
 ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+/*TODO*/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+CREATE TABLE IF NOT EXISTS visitor(
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR ( 63 ),
+    phone VARCHAR ( 31 ) UNIQUE,
+    email VARCHAR ( 255 ) UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS review(
+    id BIGSERIAL PRIMARY KEY,
+    text TEXT NOT NULL,
+    rating SMALLINT NOT NULL,
+    visitor_id BIGINT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    deleted_at TIMESTAMP WITH TIME ZONE,
+
+    CONSTRAINT fk_review_visitor
+        FOREIGN KEY (visitor_id)
+        REFERENCES visitor(id)
+        ON DELETE SET NULL
+);
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
