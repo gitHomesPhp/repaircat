@@ -5,6 +5,15 @@ export default defineEventHandler(async (event) => {
     const formData = new FormData()
 
     for ( let key in body ) {
+        if (key === 'undergrounds') {
+            body[key].forEach((underground, index, array) => {
+                let undKey = `undergrounds`
+                formData.append(undKey, underground.id);
+                console.log(undKey, underground.id)
+            })
+
+            continue
+        }
         formData.append(key, body[key]);
     }
 

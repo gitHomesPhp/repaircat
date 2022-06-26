@@ -43,15 +43,31 @@ func getScParams(ctx *gin.Context) (name, description, phone, email, site string
 	return
 }
 
-func getLocationParams(ctx *gin.Context) (city *entity.City, address string, underground *entity.Underground) {
+func getLocationParams(ctx *gin.Context) (
+	city *entity.City,
+	address string,
+	undergrounds []*entity.Underground,
+	latitude string,
+	longitude string,
+) {
 	cityId, _ := strconv.Atoi(ctx.PostForm("city"))
 	city = entity.EmptyCity()
 	city.SetId(cityId)
 
 	address = ctx.PostForm("address")
+	latitude = ctx.PostForm("latitude")
+	longitude = ctx.PostForm("longitude")
 
-	undergroundId, _ := strconv.Atoi(ctx.PostForm("underground"))
-	underground = entity.EmptyUnderground()
-	underground.SetId(undergroundId)
+	undergroundsIds := ctx.PostFormArray("undergrounds")
+
+	for _, strUndergroundId := range undergroundsIds {
+		underground := entity.EmptyUnderground()
+		undergroundId, _ := strconv.Atoi(strUndergroundId)
+		fmt.Println(undergroundId)
+		underground.SetId(undergroundId)
+
+		undergrounds = append(undergrounds, underground)
+	}
+
 	return
 }

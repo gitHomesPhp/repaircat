@@ -4,16 +4,18 @@
       <AdminMenu />
     </AppHead>
     <AppBody>
-
+      <ScForm />
     </AppBody>
     <AppFoot />
   </div>
 </template>
 
-<script lang="ts">
-
+<script>
+export default {
+  name: "create"
+}
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 
 </style>

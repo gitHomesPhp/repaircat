@@ -31,7 +31,7 @@ func List(page int) ([]map[string]any, error) {
 		sc := entity.EmptySc()
 		location := entity.EmptyLocation()
 
-		locAttr := deleteElemSlice(deleteElemSlice(location.GetAttributes(), 5), 4)
+		locAttr := deleteElemSlice(deleteElemSlice(location.GetAttributes(), 4), 3)
 
 		attrs := append(sc.GetAttributes2(), locAttr...)
 		err := rows.Scan(attrs...)
@@ -50,7 +50,7 @@ func List(page int) ([]map[string]any, error) {
 
 	underground_repository.GetUndergroundsOfLocations(locations)
 
-	for i := 1; i < len(scSlice); i++ {
+	for i := 0; i < len(scSlice); i++ {
 		scList = append(scList, scSlice[i].ToMap())
 	}
 

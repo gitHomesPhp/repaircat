@@ -46,6 +46,10 @@ func (sc *Sc) SetId(id int) {
 	sc.id = id
 }
 
+func (sc *Sc) GetId() int {
+	return sc.id
+}
+
 func (sc *Sc) AddLocation(location *Location) {
 	sc.location = location
 }

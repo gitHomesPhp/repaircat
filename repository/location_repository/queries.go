@@ -2,8 +2,14 @@ package location_repository
 
 const InsertLocation = `
 	INSERT INTO 
-		location(city_id, address, underground_id) 
-		VALUES($1, $2, NULLIF($3, 0))
+		location(city_id, address, latitude, longitude) 
+		VALUES($1, $2, $3, $4)
+`
+
+const InsertLocationUndergrounds = `
+	INSERT INTO
+		location_regions(location_id, region_type, region_id)
+		VALUES ($1, 'underground', $2)
 `
 
 const GetIdByValues = `
@@ -13,14 +19,6 @@ const GetIdByValues = `
 	WHERE 
 		city_id = $1 
 		AND address = $2 
-		AND underground_id = $3
-`
-const SelectIdByValuesAndNullUnderground = `
-	SELECT
-		id
-	FROM location
-	WHERE 
-		city_id = $1 
-		AND address = $2 
-		AND underground_id is NULL
+		AND latitude = $3
+		AND longitude = $4
 `

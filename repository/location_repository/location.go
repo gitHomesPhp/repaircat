@@ -19,7 +19,8 @@ func Flush(location *entity.Location) (error, *entity.Location) {
 	_, err = conn.Exec(context.Background(), InsertLocation,
 		location.GetCity().GetId(),
 		location.GetAddress(),
-		location.GetUnderGround().GetId(),
+		location.GetLatitude(),
+		location.GetLongitude(),
 	)
 
 	if err != nil {
@@ -29,17 +30,25 @@ func Flush(location *entity.Location) (error, *entity.Location) {
 
 	var id int
 
-	if location.GetUnderGround().GetId() == 0 {
-		err = conn.QueryRow(context.Background(), SelectIdByValuesAndNullUnderground,
-			location.GetCity().GetId(),
-			location.GetAddress(),
-		).Scan(&id)
-	} else {
-		err = conn.QueryRow(context.Background(), GetIdByValues,
-			location.GetCity().GetId(),
-			location.GetAddress(),
-			location.GetUnderGround().GetId(),
-		).Scan(&id)
+	err = conn.QueryRow(context.Background(), GetIdByValues,
+		location.GetCity().GetId(),
+		location.GetAddress(),
+		location.GetLatitude(),
+		location.GetLongitude(),
+	).Scan(&id)
+
+	if err != nil {
+		fmt.Println(err)
+		return err, nil
+	}
+
+	//TODO переделать под одну вствку
+	for _, underground := range location.GetUndergrounds() {
+		fmt.Println(underground)
+		_, err = conn.Exec(context.Background(), InsertLocationUndergrounds,
+			id,
+			underground.GetId(),
+		)
 	}
 
 	if err != nil {

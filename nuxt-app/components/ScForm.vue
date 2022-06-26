@@ -30,24 +30,43 @@
       <span>Адресс:</span>
       <input type="text" size="50" v-model="sc.address">
     </label>
-    <label>
+    <!--label>
       <span>Метро:</span>
       <select v-model="sc.underground">
         <option v-for="underground in undergrounds" :value="underground">{{ underground.label }}</option>
       </select>
+    </label-->
+    <label>
+      <span>Метро:</span>
+      <span class="undergrounds">
+        <span v-for="(subway, i) in sc.undergrounds">
+          <select v-model="sc.undergrounds[i]" :key="i">
+            <option v-for="underground in undergrounds" :value="underground">{{ underground.label }}</option>
+          </select>
+          <button @click.prevent="removeUnderground(i)" class="pointer">-</button>
+        </span>
+        <button @click.prevent="addUnderground" class="pointer">+</button>
+      </span>
+    </label>
+    <label>
+      <span>Широта:</span>
+      <input type="text" size="50" v-model="sc.latitude">
+    </label>
+    <label>
+      <span>Долгота:</span>
+      <input type="text" size="50" v-model="sc.longitude">
     </label>
     <div>
       <label>
         <input type="submit" value="Добавить">
       </label>
     </div>
-
   </form>
 </template>
 
 <script setup lang="ts">
   const route = useRoute()
-  const undergrounds = ref()
+  const undergrounds = ref([])
   const NO_UNDERGROUND = 0
 
   const cityMenu = await $fetch('/api/city')
@@ -60,7 +79,10 @@
     site: '',
     city: cityMenu[0],
     address: '',
-    underground: {},
+    //underground: {},
+    undergrounds: [],
+    latitude: '',
+    longitude: '',
   })
 
   undergrounds.value = await $fetch(`/api/underground?city=${cityMenu[0].id}`)
@@ -75,7 +97,10 @@
         site: sc.value.site,
         city: sc.value.city.id,
         address: sc.value.address,
-        underground: sc.value.underground.id ?? NO_UNDERGROUND,
+        //underground: sc.value.underground.id ?? NO_UNDERGROUND,
+        latitude: sc.value.latitude,
+        longitude: sc.value.longitude,
+        undergrounds: sc.value.undergrounds,
         user: route.query.user,
         token: route.query.token,
       },
@@ -91,6 +116,14 @@
         //sc.value.underground = ''
       })
       .catch((err) => console.log(err))
+  }
+
+  const addUnderground = () => {
+    sc.value.undergrounds.push({})
+  }
+
+  const removeUnderground = (i) => {
+    sc.value.undergrounds.splice(i, 1);
   }
 
   watch(() => sc.value.city, async (value) => {
@@ -133,5 +166,12 @@
       width: 23.5rem;
     }
   }
-
+  .undergrounds {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    select {
+      margin-bottom: .2rem;
+    }
+  }
 </style>

@@ -10,22 +10,24 @@ type Location struct {
 	undergrounds []*Underground
 }
 
-func NewLocation(city *City, address string, underground *Underground) *Location {
+func NewLocation(city *City, address string, undergrounds []*Underground, latitude, longitude string) *Location {
 	return &Location{
-		city:        city,
-		address:     address,
-		underground: underground,
+		city:         city,
+		address:      address,
+		undergrounds: undergrounds,
+		latitude:     latitude,
+		longitude:    longitude,
 	}
 }
 
 func EmptyLocation() *Location {
 	return &Location{
-		id:          0,
-		city:        nil,
-		address:     "",
-		underground: nil,
-		latitude:    "",
-		longitude:   "",
+		id:           0,
+		city:         nil,
+		address:      "",
+		latitude:     "",
+		longitude:    "",
+		undergrounds: []*Underground{},
 	}
 }
 
@@ -42,15 +44,10 @@ func (location *Location) GetAttributes() []any {
 		location.city = EmptyCity()
 	}
 
-	if location.underground == nil {
-		location.underground = EmptyUnderground()
-	}
-
 	return []any{
 		&location.id,
 		&location.city.label,
 		&location.address,
-		&location.underground.label,
 		&location.latitude,
 		&location.longitude,
 	}
@@ -66,22 +63,23 @@ func (location *Location) ToMap() map[string]any {
 	}
 
 	locationMap := map[string]any{
-		"city":    location.city.ToMap(),
-		"address": location.address,
-		//"underground": location.underground.ToMap(),
+		"city":      location.city.ToMap(),
+		"address":   location.address,
 		"latitude":  location.latitude,
 		"longitude": location.longitude,
 	}
 
-	if len(location.undergrounds) > 0 {
-		var undergroundsMap []map[string]any
+	var undergroundsMap []map[string]any
 
+	if len(location.undergrounds) > 0 {
 		for i := 0; i < len(location.undergrounds); i++ {
 			undergroundsMap = append(undergroundsMap, location.undergrounds[i].ToMap())
 		}
-
-		locationMap["undergrounds"] = undergroundsMap
+	} else {
+		undergroundsMap = []map[string]any{}
 	}
+
+	locationMap["undergrounds"] = undergroundsMap
 
 	return locationMap
 }
@@ -94,8 +92,20 @@ func (location *Location) GetAddress() string {
 	return location.address
 }
 
+func (location *Location) GetLatitude() string {
+	return location.latitude
+}
+
+func (location *Location) GetLongitude() string {
+	return location.longitude
+}
+
 func (location *Location) GetUnderGround() *Underground {
 	return location.underground
+}
+
+func (location *Location) GetUndergrounds() []*Underground {
+	return location.undergrounds
 }
 
 func (location *Location) AddUnderground(underground *Underground) {
