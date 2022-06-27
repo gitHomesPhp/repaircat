@@ -15,8 +15,22 @@
       </div>
     </div>
     <div class="menu__item">
+      <div @click="() => {showDictionarySubMenu = !showDictionarySubMenu}" class="multi-menu">
+        <span class="menu__text pointer">
+          Словари
+        </span>
+        <CommonSubMenu :show="showDictionarySubMenu">
+          <ul>
+            <li class="menu__item">
+              <NuxtLink to="/admin/dictionary/municipalities" class="menu__text">Муниципалитеты</NuxtLink>
+            </li>
+          </ul>
+        </CommonSubMenu>
+      </div>
+    </div>
+    <div class="menu__item">
       <NuxtLink to="/admin/city" class="menu__text">
-        Словари
+        Города
       </NuxtLink>
     </div>
     <div class="menu__item">
@@ -29,6 +43,7 @@
 
 <script lang="ts" setup>
   const showScSubMenu = ref(false)
+  const showDictionarySubMenu = ref(false)
 </script>
 
 <style scoped lang="scss">
