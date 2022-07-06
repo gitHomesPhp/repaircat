@@ -20,6 +20,8 @@ func main() {
 	route.GET("/city/:id/underground", controllers.GetCityUnderground)
 	route.POST("/city", controllers.AddCity)
 
+	route.POST("/sc/:id/review", controllers.AddReview)
+
 	///////////////////////////////////////////////////////
 	route.Run()
 }

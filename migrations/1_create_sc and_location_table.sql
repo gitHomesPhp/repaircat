@@ -174,3 +174,27 @@ FROM location
 ALTER TABLE location
     DROP column underground_id
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+/*TODO*/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+CREATE TABLE IF NOT EXISTS review_external(
+     id BIGSERIAL PRIMARY KEY,
+     text TEXT NOT NULL,
+     rating SMALLINT NOT NULL,
+     visitor_id BIGINT NOT NULL,
+     sc_id BIGINT NOT NULL,
+     created_at TIMESTAMP WITH TIME ZONE,
+     updated_at TIMESTAMP WITH TIME ZONE,
+     deleted_at TIMESTAMP WITH TIME ZONE,
+
+     CONSTRAINT fk_review_external_sc
+        FOREIGN KEY (sc_id)
+        REFERENCES sc
+);
+
+ALTER TABLE review
+    ADD COLUMN IF NOT EXISTS sc_id BIGINT NOT NULL,
+    ADD CONSTRAINT fk_review_sc
+        FOREIGN KEY (sc_id)
+        REFERENCES sc;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

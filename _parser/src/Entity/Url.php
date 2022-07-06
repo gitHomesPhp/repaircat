@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UrlRepository;
@@ -11,19 +13,19 @@ class Url
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 511)]
-    private $host;
+    private string $host;
 
     #[ORM\Column(type: 'text')]
-    private $path;
+    private string $path;
 
     #[ORM\Column(type: 'json', nullable: true)]
-    private $requestData = [];
+    private array $requestData = [];
 
     #[ORM\Column(type: 'boolean')]
-    private $isResponseOK;
+    private ?bool $isResponseOK;
 
     #[ORM\Column(type: 'datetimetz_immutable')]
     private $lastRequest;
