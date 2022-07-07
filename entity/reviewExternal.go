@@ -3,8 +3,9 @@ package entity
 const gis2 = 1
 
 type ReviewExternal struct {
-	id     int
-	text   string
-	rating int
-	sc     *Sc
+	id        int
+	Text      string
+	Rating    int
+	VisitorId int
+	Sc        *Sc
 }

@@ -30,6 +30,12 @@ class Url
     #[ORM\Column(type: 'datetimetz_immutable')]
     private $lastRequest;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private string $data;
+
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private int $type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +97,30 @@ class Url
     public function setLastRequest(\DateTimeImmutable $lastRequest): self
     {
         $this->lastRequest = $lastRequest;
+
+        return $this;
+    }
+
+    public function getData(): ?string
+    {
+        return $this->data;
+    }
+
+    public function setData(?string $data): self
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
