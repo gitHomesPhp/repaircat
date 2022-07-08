@@ -13,7 +13,7 @@ class Url
     public const REVIEW_TYPE = 1;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
@@ -37,6 +37,9 @@ class Url
 
     #[ORM\Column(type: 'smallint', nullable: true)]
     private int $type;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private ?bool $is_checked = false;
 
     public function getId(): ?int
     {
@@ -123,6 +126,18 @@ class Url
     public function setType(?int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function isIsChecked(): ?bool
+    {
+        return $this->is_checked;
+    }
+
+    public function setIsChecked(bool $is_checked): self
+    {
+        $this->is_checked = $is_checked;
 
         return $this;
     }

@@ -13,8 +13,6 @@ use stdClass;
 
 class ReviewSpider
 {
-    private Review $review;
-
     public function __construct(
         private Client $client,
         private EntityManagerInterface $em,
@@ -31,17 +29,9 @@ class ReviewSpider
 
             $link = new Link();
             $this->dig($link->setItemId($_2gisId)->buildUrl());
-
         }
 
     }
-
-    //public function setReview(Review $review): self
-    //{
-    //    $this->review = $review;
-//
-    //    return $this;
-    //}
 
     public function dig(Link $link): void
     {
@@ -52,19 +42,27 @@ class ReviewSpider
         $url->setType(Url::REVIEW_TYPE);
         $url->setPath($link->getPath());
         $url->setLastRequest(new DateTimeImmutable());
+        $data = $response->getBody()->getContents();
 
         if ($response->getStatusCode() === 200) {
-            $data = $response->getBody()->getContents();
             $url->setIsResponseOK(true);
             $url->setData($data);
         }
 
         $this->em->persist($url);
         $this->em->flush();
+
+        $this->getScReviewNextLink(json_decode($data));
     }
 
-    private function getScReviewNextLink(stdClass $dataObject)
+    private function getScReviewNextLink(stdClass $dataObject): void
     {
+        sleep(mt_rand(1, 5));
+        if (isset($dataObject->meta->next_link)) {
+            $link = new Link();
+            $link->setUrl($dataObject->meta->next_link);
 
+            $this->dig($link);
+        }
     }
 }
