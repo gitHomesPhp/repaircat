@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+type queryFunc func(ctx context.Context, sql string, args ...interface{})
+
 func Conn() *pgx.Conn {
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
@@ -16,4 +18,8 @@ func Conn() *pgx.Conn {
 	defer conn.Close(context.Background())
 
 	return conn
+}
+
+func Execute(sql string, args ...interface{}) {
+
 }

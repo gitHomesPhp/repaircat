@@ -3,7 +3,9 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gitHomesPhp/repaircat/controllers"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/scCard/postgresql"
 	"github.com/gitHomesPhp/repaircat/middleware"
+	"net/http"
 )
 
 func main() {
@@ -21,6 +23,14 @@ func main() {
 	route.POST("/city", controllers.AddCity)
 
 	route.POST("/sc/:id/review", controllers.AddReview)
+	route.GET("/sc/:id/reviews-info", controllers.GetReviewsInfo)
+
+	route.GET("/test", func(context *gin.Context) {
+		scCardRepo := postgresql.GetRepo()
+		_, list := scCardRepo.List(1)
+
+		context.JSON(http.StatusOK, list)
+	})
 
 	///////////////////////////////////////////////////////
 	route.Run()
