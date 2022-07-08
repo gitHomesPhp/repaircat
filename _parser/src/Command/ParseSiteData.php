@@ -25,7 +25,7 @@ class ParseSiteData extends Command
     {
         $rev = new Review(70000001055902903);
 
-        $data = $this->reviewSpider->setReview($rev);
+        $this->reviewSpider->handle(1);
 
         //$output->writeln($data);
         return Command::SUCCESS;

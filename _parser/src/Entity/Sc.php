@@ -11,27 +11,27 @@ use Doctrine\ORM\Mapping as ORM;
 class Sc
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'bigint')]
-    private $repaircat_id;
+    private ?int $repaircat_id;
 
     #[ORM\Column(type: 'string', length: 511, nullable: true)]
-    private $gis_id;
+    private ?string $gis_id;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRepaircatId(): ?string
+    public function getRepaircatId(): ?int
     {
         return $this->repaircat_id;
     }
 
-    public function setRepaircatId(string $repaircat_id): self
+    public function setRepaircatId(int $repaircat_id): self
     {
         $this->repaircat_id = $repaircat_id;
 
