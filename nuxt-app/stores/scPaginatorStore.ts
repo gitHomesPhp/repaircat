@@ -15,7 +15,7 @@ export const useScPaginatorStore = defineStore(
             async fetchScList(value) {
                 const scList = await $fetch('/api/sc-list?page=' + value)
                 this.paginate = scList.pop()
-                this.scList = scList
+                this.scList = scList.pop()
             }
         },
         getters: {

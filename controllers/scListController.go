@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/scCard/postgresql"
 	"net/http"
 	"strconv"
 )
@@ -14,10 +14,11 @@ func ScList(ctx *gin.Context) {
 		fmt.Println(err)
 	}
 
-	scList, err := sc_repository.List(page)
-	if err != nil {
-		fmt.Println(err)
-	}
+	scCardRepo := postgresql.GetRepo()
+	_, list, next := scCardRepo.List(page)
 
-	ctx.JSON(http.StatusOK, scList)
+	ctx.JSON(http.StatusOK, []any{
+		list,
+		next,
+	})
 }

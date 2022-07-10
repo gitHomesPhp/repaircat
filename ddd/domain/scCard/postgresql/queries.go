@@ -15,7 +15,7 @@ SELECT
 
 	location_id
 FROM sc 
-	JOIN location ON sc.id = location.id
+	JOIN location ON sc.location_id = location.id
 	JOIN city ON location.city_id = city.id
 ORDER BY sc.id
 LIMIT $1
@@ -40,4 +40,14 @@ const GetUndergrounds = `
 	    underground
 	        JOIN location_regions ON region_id = underground.id AND location_regions.region_type = 'underground'
 	WHERE location_id = ANY ($1)
+`
+
+const PreviousNextQuery = `
+SELECT
+	exists(
+		select id from sc where id < $1
+	) as previous,
+	exists(
+		select id from sc where id > $2
+	) as next
 `

@@ -1,16 +1,17 @@
 <template>
   <div>
     <ScCard
-      v-for="sc in scList"
-      :key="sc.id"
-      :name="sc.name"
-      :id="sc.id"
-      :description="sc.description"
-      :phone="sc.phone"
-      :email="sc.email"
-      :site="sc.site"
-      :location="sc.location"
-      @click="openSc(sc.id)"
+      v-for="scCard in scList"
+      :key="scCard.sc.id"
+      :name="scCard.sc.name"
+      :id="scCard.sc.id"
+      :description="scCard.sc.description"
+      :phone="scCard.sc.phone"
+      :email="scCard.sc.email"
+      :site="scCard.sc.site"
+      :location="scCard.sc.location"
+      :review-info="scCard.review_info"
+      @click="openSc(scCard.sc.id)"
     />
   </div>
 </template>
@@ -27,6 +28,7 @@ const openSc = (id) => {
 }
 
 const {scList} = storeToRefs(useScPaginatorStore())
+
 </script>
 
 <style scoped>

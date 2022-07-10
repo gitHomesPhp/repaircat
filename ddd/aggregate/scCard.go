@@ -6,8 +6,8 @@ import (
 )
 
 type ScCard struct {
-	Sc         *entity.Sc
-	ReviewInfo *valueobject.ReviewInfo
+	Sc         *entity.Sc              `json:"sc"`
+	ReviewInfo *valueobject.ReviewInfo `json:"review_info"`
 }
 
 func NewScCard() *ScCard {

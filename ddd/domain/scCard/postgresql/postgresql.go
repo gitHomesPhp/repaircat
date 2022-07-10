@@ -22,14 +22,14 @@ func GetRepo() *ScCardRepository {
 	}
 }
 
-func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.ScCard) {
+func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.ScCard, map[string]bool) {
 	const COUNT = 10
 
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		return err, nil
+		return err, nil, nil
 	}
 
 	rows, _ := conn.Query(context.Background(), SelectScCardsByCursor, COUNT, COUNT*page-COUNT)
@@ -101,7 +101,18 @@ func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.Sc
 		)
 	}
 
-	return nil, ScCardRepository.scCards
+	from := ScCardRepository.scCards[0].Sc.Id
+	to := ScCardRepository.scCards[len(ScCardRepository.scCards)-1].Sc.Id
+
+	var previous bool
+	var next bool
+
+	conn.QueryRow(context.Background(), PreviousNextQuery, from, to).Scan(&previous, &next)
+
+	return nil, ScCardRepository.scCards, map[string]bool{
+		"previous": previous,
+		"next":     next,
+	}
 }
 
 func (ScCardRepository *ScCardRepository) Add() {

@@ -1,11 +1,25 @@
 <template>
   <div class="wrapper">
-    <img src="~/assets/img/gear_icon.png" alt="">
+    <div>
+      <img src="~/assets/img/gear_icon.png" alt="">
+    </div>
     <div class="sc-card">
-      <h3 class="sc-card__name">
-        <!--TODO-->
-        <NuxtLink @click.prevent.stop :to="`/spb/sc/${id}-service-center`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
-      </h3>
+      <div class="sc-card__head">
+        <h3 class="sc-card__name">
+          <!--TODO-->
+          <NuxtLink @click.prevent.stop :to="`/spb/sc/${id}-service-center`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
+        </h3>
+
+        <div class="rating">
+          <div class="rating__star">
+            <div class="rating__fill" :style="'width:' + ratingFill + '%'"></div>
+          </div>
+          <div class="rating__count">
+            <span>{{ props.reviewInfo.count}} отзывов</span>
+          </div>
+        </div>
+      </div>
+
       <div class="sc-card__description" v-html="description"></div>
       <div class="sc-card__bottom">
         <div class="sc-card__location location">
@@ -61,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-  defineProps({
+  const props = defineProps({
     id: { required: true, type: Number },
     name: { required: true, type: String },
     description: { required: true, type: String },
@@ -70,7 +84,10 @@
     site: { required: true, type: String },
     city: { default: '', type: String },
     location: { required: true, type: Object },
+    reviewInfo: { required: true, type: Object },
   })
+
+  const ratingFill = 100 * props.reviewInfo.rating / 5
 </script>
 
 <style scoped lang="scss">
@@ -82,11 +99,11 @@
     align-items: center;
     @media(max-width: 510px) {
       flex-direction: column;
-      &>img {
+      &>div>img {
         margin-bottom: .4rem;
       }
     }
-    &>img {
+    &>div>img {
       width: 100px;
       height: 75px;
     }
@@ -119,6 +136,10 @@
       @media(max-width: 510px) {
         flex-direction: column;
       }
+    }
+    &__head {
+      display: flex;
+      justify-content: space-between;
     }
     &__name {
       font-weight: bolder;
@@ -186,6 +207,23 @@
       &__item {
         margin-bottom: .4rem;
       }
+    }
+  }
+  .rating {
+    &__star {
+      background: url(/img/star_icon.svg);
+      width: 135px;
+      height: 24px;
+    }
+    &__fill {
+      background: url(/img/star_icon_fill.svg);
+      height: 24px;
+    }
+    &__count {
+      margin-top: 3px;
+      font-size: .9rem;
+      text-decoration: underline;
+      color: #6c757d;
     }
   }
 </style>

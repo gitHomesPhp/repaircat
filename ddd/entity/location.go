@@ -1,12 +1,12 @@
 package entity
 
 type Location struct {
-	Id           int
-	Address      string
-	Latitude     string
-	Longitude    string
-	City         *City
-	Undergrounds []*Underground
+	Id           int            `json:"-"`
+	Address      string         `json:"address"`
+	Latitude     string         `json:"latitude"`
+	Longitude    string         `json:"longitude"`
+	City         *City          `json:"city"`
+	Undergrounds []*Underground `json:"undergrounds"`
 
 	cityId int
 }

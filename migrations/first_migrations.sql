@@ -175,7 +175,6 @@ ALTER TABLE location
     DROP column underground_id
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-/*TODO*/
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 CREATE TABLE IF NOT EXISTS review_external(
      id BIGSERIAL PRIMARY KEY,
