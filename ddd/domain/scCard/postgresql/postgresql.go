@@ -109,6 +109,8 @@ func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.Sc
 
 	conn.QueryRow(context.Background(), PreviousNextQuery, from, to).Scan(&previous, &next)
 
+	defer conn.Close(context.Background())
+
 	return nil, ScCardRepository.scCards, map[string]bool{
 		"previous": previous,
 		"next":     next,

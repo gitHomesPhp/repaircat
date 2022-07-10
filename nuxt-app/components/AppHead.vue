@@ -4,6 +4,9 @@
       <NuxtLink to="/" style="text-decoration: none; color: white">
         <span>Repaircat</span>
       </NuxtLink>
+      <div class="header__city">
+        {{currentCity.label}}
+      </div>
     </div>
     <header>
       <nav class="header__navigation">
@@ -14,7 +17,10 @@
 </template>
 
 <script lang="ts" setup>
+import {useCityStore} from "~/stores/cityStore";
+import {storeToRefs} from "pinia";
 
+const { currentCity } = storeToRefs(useCityStore())
 </script>
 
 <style scoped lang="scss">
@@ -32,6 +38,11 @@
       padding: .4rem;
       font-weight: bolder;
       font-size: 1.3rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    &__city {
+      margin-right: .8em;
     }
     &__navigation {
       background-color: #f2f8fc;

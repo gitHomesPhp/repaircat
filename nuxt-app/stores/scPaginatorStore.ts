@@ -21,7 +21,7 @@ export const useScPaginatorStore = defineStore(
         getters: {
             nextPage: (state) => state.currentPage + 1,
             previousPage: (state) => state.currentPage - 1,
-            canNextPage: (state) => !!state.paginate.next,
-            canPreviousPage: (state) => !!state.paginate.previous,
+            canNextPage: (state) => state.paginate.next,
+            canPreviousPage: (state) => state.paginate.previous,
         }
     })

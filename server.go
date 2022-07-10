@@ -11,10 +11,11 @@ func main() {
 	route.Use(middleware.CORSMiddleware())
 	route.LoadHTMLGlob("html/index.html")
 	///////////////////////////////////////////////////////
-
 	route.GET("/sc-list", controllers.ScList)
 	route.POST("/sc", controllers.AddSc)
 	route.GET("/sc/:id", controllers.GetSc)
+
+	route.GET("/cities", controllers.CityList)
 
 	route.GET("/city", controllers.AllCities)
 	route.GET("/city/:id/underground", controllers.GetCityUnderground)
