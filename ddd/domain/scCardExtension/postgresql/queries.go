@@ -25,3 +25,12 @@ SELECT
 FROM underground LEFT JOIN location_regions ON region_id = underground.id AND location_regions.region_type = 'underground'
 WHERE location_id = $1
 `
+
+const GetReviewInfo = `
+SELECT
+    count(sc_id) as count,
+    COALESCE(avg(rating), 0) as rating
+FROM sc LEFT JOIN review_external ON sc.id = review_external.sc_id
+WHERE sc.id = ($1)
+GROUP BY sc.id
+`

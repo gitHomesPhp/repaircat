@@ -9,15 +9,10 @@
           <!--TODO-->
           <NuxtLink @click.prevent.stop :to="`/spb/sc/${id}-service-center`" style="text-decoration: none; color: #0070c0">{{ name }}</NuxtLink>
         </h3>
-
-        <div class="rating">
-          <div class="rating__star">
-            <div class="rating__fill" :style="'width:' + ratingFill + '%'"></div>
-          </div>
-          <div class="rating__count">
-            <span>{{ props.reviewInfo.count}} отзывов</span>
-          </div>
-        </div>
+        <CommonRating
+          :rating="reviewInfo.rating"
+          :count="reviewInfo.count"
+        />
       </div>
 
       <div class="sc-card__description" v-html="description"></div>

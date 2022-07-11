@@ -22,7 +22,10 @@
     </div>
     <div class="sc__body">
       <div class="sc__meta-info">
-        <div>рейтинг 1000</div>
+        <CommonRating
+            :rating="scCardExtension.review_info.rating"
+            :count="scCardExtension.review_info.count"
+        />
       </div>
       <div class="sc__line"></div>
       <div class="sc__main-info">

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/ddd/aggregate"
 	"github.com/gitHomesPhp/repaircat/ddd/entity"
+	"github.com/gitHomesPhp/repaircat/ddd/valueobject"
 	"github.com/jackc/pgx/v4"
 	"os"
 )
@@ -55,6 +56,19 @@ func (scCardExtensionRepo *ScCardExtensionRepo) Get(id int) (error, *aggregate.S
 
 		scCardExtension.Sc.Location.Undergrounds = append(scCardExtension.Sc.Location.Undergrounds, underground)
 	}
+
+	reviewInfo := &valueobject.ReviewInfo{
+		Count:  0,
+		Rating: 0,
+	}
+	rows.Scan(
+		&reviewInfo.Count,
+		&reviewInfo.Rating,
+	)
+
+	conn.QueryRow(context.Background(), GetReviewInfo, id).Scan(&reviewInfo.Count, &reviewInfo.Rating)
+
+	scCardExtension.ReviewInfo = reviewInfo
 
 	defer conn.Close(context.Background())
 
