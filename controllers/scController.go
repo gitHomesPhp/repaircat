@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/scCardExtension/postgresql"
 	"github.com/gitHomesPhp/repaircat/entity"
 	"github.com/gitHomesPhp/repaircat/repository/location_repository"
 	"github.com/gitHomesPhp/repaircat/repository/sc_repository"
@@ -29,7 +30,9 @@ func AddSc(context *gin.Context) {
 func GetSc(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 
-	sc, _ := sc_repository.Find(id)
+	scCardExtensionRepo := postgresql.GetRepo()
+
+	_, sc := scCardExtensionRepo.Get(id)
 
 	ctx.JSON(http.StatusOK, sc)
 }

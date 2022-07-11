@@ -1,4 +1,4 @@
-package postgres
+package postgresql
 
 const SelectScCardExtensionById = `
 SELECT
@@ -8,12 +8,20 @@ SELECT
 	COALESCE(phone, '') as phone,
 	COALESCE(email, '') as email,
 	COALESCE(site, '') as site,
-	COALESCE(location.id, 0) as location_id,
 	COALESCE(city.label, '') as city,
 	COALESCE(address, '') as address,
 	COALESCE(latitude, '') as latitude,
-	COALESCE(longitude, '') as longitude
+	COALESCE(longitude, '') as longitude,
+
+	location_id
 FROM sc LEFT JOIN location ON location_id = location.id
 	JOIN city on location.city_id = city.id
 WHERE sc.id = $1
+`
+
+const GetUndergrounds = `
+SELECT
+	underground.label
+FROM underground LEFT JOIN location_regions ON region_id = underground.id AND location_regions.region_type = 'underground'
+WHERE location_id = $1
 `

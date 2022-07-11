@@ -1,9 +1,10 @@
-package postgres
+package postgresql
 
 import (
 	"context"
 	"fmt"
 	"github.com/gitHomesPhp/repaircat/ddd/aggregate"
+	"github.com/gitHomesPhp/repaircat/ddd/entity"
 	"github.com/jackc/pgx/v4"
 	"os"
 )
@@ -29,15 +30,33 @@ func (scCardExtensionRepo *ScCardExtensionRepo) Get(id int) (error, *aggregate.S
 
 	row := conn.QueryRow(context.Background(), SelectScCardExtensionById, id)
 
-	row.Scan(&scCardExtension.Sc.Name,
+	var locationId int
+
+	row.Scan(
+		&scCardExtension.Sc.Id,
+		&scCardExtension.Sc.Name,
 		&scCardExtension.Sc.Description,
 		&scCardExtension.Sc.Phone,
 		&scCardExtension.Sc.Email,
 		&scCardExtension.Sc.Site,
-		&scCardExtension.
+		&scCardExtension.Sc.Location.City.Label,
+		&scCardExtension.Sc.Location.Address,
+		&scCardExtension.Sc.Location.Latitude,
+		&scCardExtension.Sc.Location.Longitude,
+		&locationId,
 	)
+
+	rows, _ := conn.Query(context.Background(), GetUndergrounds, locationId)
+
+	for rows.Next() {
+		underground := &entity.Underground{Label: ""}
+
+		rows.Scan(&underground.Label)
+
+		scCardExtension.Sc.Location.Undergrounds = append(scCardExtension.Sc.Location.Undergrounds, underground)
+	}
 
 	defer conn.Close(context.Background())
 
-	return nil, scCardExtensionRepo.scCardExtension[0]
+	return nil, scCardExtension
 }

@@ -5,7 +5,7 @@
         <div class="sc__type">
           <span>{{ title }}</span>
         </div>
-        <h1 class="sc__name">{{sc.name}}</h1>
+        <h1 class="sc__name">{{scCardExtension.sc.name}}</h1>
       </div>
       <div class="sc__contacts contacts">
         <div class="contact__column contact__column--header">
@@ -14,9 +14,9 @@
           <span>Сайт:</span>
         </div>
         <div class="contact__column contact__column--value">
-          <span class="contact__item">{{sc.phone || 'Нет информации'}}</span>
-          <span class="contact__item">{{sc.email || 'Нет информации'}}</span>
-          <span class="contact__item">{{sc.site || 'Нет информации'}}</span>
+          <span class="contact__item">{{scCardExtension.sc.phone || 'Нет информации'}}</span>
+          <span class="contact__item">{{scCardExtension.sc.email || 'Нет информации'}}</span>
+          <span class="contact__item">{{scCardExtension.sc.site || 'Нет информации'}}</span>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="sc__line"></div>
       <div class="sc__main-info">
         <div @click="toggleText" class="sc__description pointer" :class="{'hidden': isHidden}">
-          <div  v-html="sc.description"></div>
+          <div  v-html="scCardExtension.sc.description"></div>
         </div>
       </div>
     </div>
@@ -36,10 +36,10 @@
         <div class="sc__location-address location-info">
           <img src="~/assets/img/location_icon.png" alt="">
           <span class="location-info__header">Аддрес:</span>
-          <span class="location-info__value">{{ sc.location.address }}</span>
+          <span class="location-info__value">{{ scCardExtension.sc.location.address }}</span>
         </div>
-        <div v-if="sc.location.undergrounds.length"
-             v-for="underground in sc.location.undergrounds"
+        <div v-if="scCardExtension.sc.location.undergrounds.length"
+             v-for="underground in scCardExtension.sc.location.undergrounds"
              class="sc__location-address location-info"
         >
           <img src="~/assets/img/underground_icon.png" alt="">
@@ -71,12 +71,12 @@
   const route = useRoute()
 
   const title = ref('Сервисный центр')
-  const { data: sc} = await useFetch(`/api/sc/${route.params.id}`)
+  const { data: scCardExtension} = await useFetch(`/api/sc/${route.params.id}`)
   const isHidden = ref(true)
   const toggleText = () => {isHidden.value = !isHidden.value}
   const showMap  = ref(false)
 
-  const coords = ref([sc.value.location.latitude, sc.value.location.longitude])
+  const coords = ref([scCardExtension.value.sc.location.latitude, scCardExtension.value.sc.location.longitude])
   const changeCoords = (e) => {
     coords.value =  e.get('coords');
   }
