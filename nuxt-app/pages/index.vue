@@ -3,6 +3,7 @@
     <AppHead />
     <AppBody>
       <div>
+        <CommonFinder />
         <Paginator type="top"/>
         <ScList />
         <Paginator type="bottom"/>
