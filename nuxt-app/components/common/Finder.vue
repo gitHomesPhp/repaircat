@@ -120,12 +120,17 @@
     }
   }
   .find-by {
+    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: .9rem;
+    padding: .3rem 0;
     & > img {
       width: 25px;
       margin-right: .7rem;
+    }
+    &:hover {
+      background-color: #f7f7f7;
     }
   }
   button {
