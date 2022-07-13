@@ -18,7 +18,7 @@ func main() {
 	route.GET("/cities", controllers.CityList)
 
 	route.GET("/city", controllers.AllCities)
-	route.GET("/city/:id/underground", controllers.GetCityUnderground)
+	route.GET("/city/:id/underground", controllers.GetUndergroundByCity)
 	route.POST("/city", controllers.AddCity)
 
 	route.POST("/sc/:id/review", controllers.AddReview)

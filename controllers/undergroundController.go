@@ -1,21 +1,18 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/gitHomesPhp/repaircat/repository/underground_repository"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/underground/postgresql"
 	"net/http"
 	"strconv"
 )
 
-func GetCityUnderground(ctx *gin.Context) {
+func GetUndergroundByCity(ctx *gin.Context) {
 	cityId, _ := strconv.Atoi(ctx.Param("id"))
 
-	undergrounds, err := underground_repository.GetUndergroundByCityId(cityId)
+	undergroundRepo := postgresql.GetRepo()
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	_, undergrounds := undergroundRepo.ListByCity(cityId)
 
 	ctx.JSON(http.StatusOK, undergrounds)
 }

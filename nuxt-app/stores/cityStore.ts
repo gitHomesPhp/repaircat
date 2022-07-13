@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import cities from "~/server/api/cities";
+import {useUndergroundStore} from "~/stores/undergroundStore";
 
 export const useCityStore = defineStore(
     'cityStore',
@@ -13,6 +13,7 @@ export const useCityStore = defineStore(
             async fetchCities() {
                 this.cities = await $fetch('/api/cities')
 
+                //TODO логика выбора города для ситипикера
                 this.currentCity = this.cities.reduce((previousValue, currentValue) => {
                     if (currentValue.code = 'spb') {
                         return currentValue

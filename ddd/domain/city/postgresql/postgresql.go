@@ -24,15 +24,16 @@ func (cityRepo *CityRepo) List() (error, []*entity.City) {
 		return err, nil
 	}
 
-	rows, _ := conn.Query(context.Background(), "SELECT code, label FROM city")
+	rows, _ := conn.Query(context.Background(), "SELECT code, label, id FROM city")
 
 	for rows.Next() {
 		city := &entity.City{
+			Id:    0,
 			Code:  "",
 			Label: "",
 		}
 
-		rows.Scan(&city.Code, &city.Label)
+		rows.Scan(&city.Code, &city.Label, &city.Id)
 
 		cityRepo.Cities = append(cityRepo.Cities, city)
 	}

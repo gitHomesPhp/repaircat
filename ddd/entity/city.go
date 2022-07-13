@@ -1,7 +1,7 @@
 package entity
 
 type City struct {
-	id    int
+	Id    int    `json:"id"`
 	Code  string `json:"code"`
 	Label string `json:"label"`
 }
