@@ -116,7 +116,6 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: .7rem
     }
   }
   .find-by {
@@ -124,7 +123,7 @@
     display: flex;
     align-items: center;
     font-size: .9rem;
-    padding: .3rem 0;
+    padding: .4rem .7rem;
     & > img {
       width: 25px;
       margin-right: .7rem;
