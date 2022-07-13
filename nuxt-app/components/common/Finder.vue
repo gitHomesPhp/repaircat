@@ -6,7 +6,25 @@
              type="text"
              placeholder="Метро или район">
       <div v-if="activeSub" class="finder__helper-output">
-        <!-- TODO тут отображение -->
+        <div v-if="submenuItems.empty">
+          <span>{{submenuItems.empty.label}}</span>
+        </div>
+        <ul>
+          <li v-if="submenuItems.undergrounds.length"
+              v-for="underground in submenuItems.undergrounds"
+              class="find-by"
+          >
+            <img src="/img/underground.svg" alt="">
+            {{underground.label}}
+          </li>
+          <li v-if="submenuItems.municipalities.length"
+              v-for="municipality in submenuItems.municipalities"
+              class="find-by"
+          >
+            <img src="/img/municipality.png" alt="">
+            {{municipality.label}}
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -19,6 +37,42 @@
 
   const showSub = () => activeSub.value = true
   const closeSub = () => activeSub.value = false
+  const emptySubmenuItem = {
+    code: 'empty',
+    label: 'Вы можете искать по метро или району...'
+  }
+
+  const undergrounds = [
+    {
+      id: 1,
+      code: 'underground',
+      label: 'Пролетарская'
+    },
+    {
+      id: 1,
+      code: 'underground',
+      label: 'Кировский завод'
+    }
+  ]
+  const municipalities = [
+    {
+      id: 1,
+      code: 'municipality',
+      label: 'Кудрово'
+    },
+    {
+      id: 1,
+      code: 'underground',
+      label: 'Красносельский'
+    }
+  ]
+
+  const submenuItems = ref({
+    empty: emptySubmenuItem,
+    undergrounds: undergrounds,
+    municipalities: municipalities,
+  })
+
 </script>
 
 <style scoped lang="scss">
@@ -46,10 +100,34 @@
   &__helper-output {
     position: absolute;
     width: 99.7%;
-    border: #5a5c61 1px solid;
     top: 50px;
+    z-index: 2;
+    background: #fff;
+    box-shadow: 0 6px 10px rgb(0 0 0 / 7%), 0 1px 18px rgb(0 0 0 / 6%), 0 3px 5px rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    padding: .8rem 0;
+    font-size: 16px;
+    &>div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    &>ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: .7rem
+    }
   }
-
+  .find-by {
+    display: flex;
+    align-items: center;
+    font-size: .9rem;
+    & > img {
+      width: 25px;
+      margin-right: .7rem;
+    }
+  }
   button {
     width: 25%;
     height: 90%;
