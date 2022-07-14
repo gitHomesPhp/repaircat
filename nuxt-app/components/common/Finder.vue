@@ -3,8 +3,7 @@
     <div class="finder__main-search">
       <input @focus="showSub"
              @blur="closeSub"
-             @input="changeHelperFind"
-             @change="changeHelperFind"
+             @keydown="changeHelperFind"
              type="text"
              placeholder="Метро или район"
              v-model="findString"
