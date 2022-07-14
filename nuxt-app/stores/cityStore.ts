@@ -27,6 +27,10 @@ export const useCityStore = defineStore(
                 this.cityUndergrounds[`${cityId}`] = await $fetch(`/api/underground?city=${cityId}`)
             },
 
+            async fetchMunicipalities(cityId: Number) {
+                this.cityMunicipalities[`${cityId}`] = await $fetch(`/api/municipality?city=${cityId}`)
+            },
+
             async setCurrentCity(code: string = 'spb') {
                 //TODO логика выбора города для ситипикера
                 this.currentCity = this.cities.reduce((previousValue, currentValue) => {
@@ -44,9 +48,18 @@ export const useCityStore = defineStore(
                     }
 
                     return this.cityUndergrounds[`${cityId}`]
-                        .filter(underground => underground.label.toLowerCase().includes(string))
+                        .filter(underground => underground.label.toLowerCase().startsWith(string))
                 }
+            },
+            findMunicipalities(string: string, cityId: number) {
+                if(process.client) {
+                    if (string === '') {
+                        return []
+                    }
 
+                    return this.cityMunicipalities[`${cityId}`]
+                        .filter(municipality => municipality.label.toLowerCase().startsWith(string))
+                }
             }
         }
     }

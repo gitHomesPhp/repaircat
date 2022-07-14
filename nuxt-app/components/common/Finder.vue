@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
   import {useCityStore} from "~/stores/cityStore";
-  const { findUndergrounds, currentCity } = useCityStore()
+  const { findUndergrounds, findMunicipalities, currentCity } = useCityStore()
 
   const emptySubmenuItem = {
     code: 'empty',
@@ -48,6 +48,7 @@
   const findString = ref('')
   const activeSub = ref(false)
   const foundUndergrounds = ref([])
+  const foundMunicipalities = ref([])
   const submenuItems = ref({
     empty: emptySubmenuItem,
     undergrounds: [],
@@ -63,9 +64,11 @@
     if (!isGoing.value) {
       isGoing.value = true
       setTimeout(() => {
-        foundUndergrounds.value = findUndergrounds(findString.value.toLowerCase(), currentCity.id)
-        isGoing.value = false
+        foundUndergrounds.value = findUndergrounds(findString.value.toLowerCase(), currentCity.id).slice(0, 3)
         submenuItems.value.undergrounds = foundUndergrounds.value
+        foundMunicipalities.value = findMunicipalities(findString.value.toLowerCase(), currentCity.id).slice(0, 3)
+        submenuItems.value.municipalities = foundMunicipalities.value
+        isGoing.value = false
       }, 100)
     }
   }
