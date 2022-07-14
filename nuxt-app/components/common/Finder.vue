@@ -1,9 +1,9 @@
 <template>
   <div class="finder">
     <div class="finder__main-search">
-      <input @focus="showSub"
+      <input @keyup="changeHelperFind"
+             @focus="showSub"
              @blur="closeSub"
-             @keydown="changeHelperFind"
              type="text"
              placeholder="Метро или район"
              v-model="findString"
