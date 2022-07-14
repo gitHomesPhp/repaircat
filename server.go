@@ -12,6 +12,7 @@ func main() {
 	route.LoadHTMLGlob("html/index.html")
 	///////////////////////////////////////////////////////
 	route.GET("/sc-list", controllers.ScList)
+	route.GET("/sc-list/search", controllers.MainSearch)
 	route.POST("/sc", controllers.AddSc)
 	route.GET("/sc/:id", controllers.GetSc)
 

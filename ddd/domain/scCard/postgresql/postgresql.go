@@ -117,6 +117,38 @@ func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.Sc
 	}
 }
 
+func (ScCardRepository *ScCardRepository) Search(page int, query string) (error, []*aggregate.ScCard, map[string]bool) {
+	const COUNT = 10
+
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		return err, nil, nil
+	}
+
+	var locationIds []int
+
+	rows, _ := conn.Query(context.Background(), FindLocationIds, query)
+
+	for rows.Next() {
+		var locationId int
+		rows.Scan(&locationId)
+
+		locationIds = append(locationIds, locationId)
+	}
+
+	previous := true
+	next := false
+
+	defer conn.Close(context.Background())
+
+	return nil, ScCardRepository.scCards, map[string]bool{
+		"previous": previous,
+		"next":     next,
+	}
+}
+
 func (ScCardRepository *ScCardRepository) Add() {
 
 }

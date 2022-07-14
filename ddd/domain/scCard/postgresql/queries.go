@@ -22,6 +22,14 @@ LIMIT $1
 OFFSET $2
 `
 
+const FindLocationIds = `
+SELECT
+	id
+FROM underground
+	JOIN location_regions ON underground.id = location_regions.region_id and region_type = 'underground'
+WHERE label ILIKE $1 || '%'
+`
+
 const GetScCardInfo = `
 SELECT
     sc.id,

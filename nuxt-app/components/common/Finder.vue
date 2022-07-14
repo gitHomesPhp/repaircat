@@ -18,6 +18,7 @@
           <li v-if="submenuItems.undergrounds.length"
               v-for="underground in submenuItems.undergrounds"
               class="find-by"
+              @click=""
           >
             <img src="/img/underground.svg" alt="">
             {{underground.label}}
@@ -25,6 +26,7 @@
           <li v-if="submenuItems.municipalities.length"
               v-for="municipality in submenuItems.municipalities"
               class="find-by"
+              @click=""
           >
             <img src="/img/municipality.png" alt="">
             {{municipality.label}}
