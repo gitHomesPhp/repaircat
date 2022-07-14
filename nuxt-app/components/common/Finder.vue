@@ -1,7 +1,7 @@
 <template>
   <div class="finder">
     <div class="finder__main-search">
-      <input @keyup="changeHelperFind"
+      <input @change="changeHelperFind"
              @focus="showSub"
              @blur="closeSub"
              type="text"
