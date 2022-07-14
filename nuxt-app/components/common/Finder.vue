@@ -4,12 +4,13 @@
       <input @focus="showSub"
              @blur="closeSub"
              @input="changeHelperFind"
+             @change="changeHelperFind"
              type="text"
              placeholder="Метро или район"
              v-model="findString"
       >
       <div v-if="activeSub" class="finder__helper-output">
-        <div v-if="submenuItems.empty
+        <div class="empty" v-if="submenuItems.empty
                   && submenuItems.undergrounds.length === 0
                   && submenuItems.municipalities.length === 0"
         >
@@ -74,6 +75,9 @@
 </script>
 
 <style scoped lang="scss">
+.empty {
+  font-size: .9rem;
+}
 .finder {
   display: flex;
   align-items: center;
