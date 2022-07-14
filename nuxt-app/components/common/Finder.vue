@@ -1,8 +1,7 @@
 <template>
   <div class="finder">
     <div class="finder__main-search">
-      <input @input="changeHelperFind"
-             @focus="showSub"
+      <input @focus="showSub"
              @blur="closeSub"
              type="text"
              placeholder="Метро или район"
@@ -60,7 +59,7 @@
 
   const isGoing = ref(false);
 
-  const changeHelperFind = () => {
+  const changeHelperFind = async () => {
     if (!isGoing.value) {
       isGoing.value = true
       setTimeout(() => {
@@ -69,8 +68,11 @@
         submenuItems.value.undergrounds = foundUndergrounds.value
       }, 100)
     }
-
   }
+
+  watch(() => findString.value, async () => {
+    await changeHelperFind()
+  })
 </script>
 
 <style scoped lang="scss">
