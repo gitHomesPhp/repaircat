@@ -33,10 +33,19 @@
 </template>
 
 <script lang="ts" setup>
+  import {useCityStore} from "~/stores/cityStore";
   const activeSub = ref(false)
-
   const showSub = () => activeSub.value = true
   const closeSub = () => activeSub.value = false
+
+  const { cityUndergrounds, findUndergrounds, currentCity } = useCityStore()
+
+
+
+  const foundUndergrounds = ref([])
+  foundUndergrounds.value=findUndergrounds('про', currentCity.id)
+
+
   const emptySubmenuItem = {
     code: 'empty',
     label: 'Вы можете искать по метро или району...'
