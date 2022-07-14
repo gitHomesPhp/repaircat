@@ -39,6 +39,10 @@ export const useCityStore = defineStore(
             },
             findUndergrounds(string: string, cityId: number) {
                 if(process.client) {
+                    if (string === '') {
+                        return []
+                    }
+
                     return this.cityUndergrounds[`${cityId}`]
                         .filter(underground => underground.label.toLowerCase().includes(string))
                 }

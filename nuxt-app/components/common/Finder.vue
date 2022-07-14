@@ -3,10 +3,16 @@
     <div class="finder__main-search">
       <input @focus="showSub"
              @blur="closeSub"
+             @input="changeHelperFind"
              type="text"
-             placeholder="Метро или район">
+             placeholder="Метро или район"
+             v-model="findString"
+      >
       <div v-if="activeSub" class="finder__helper-output">
-        <div v-if="submenuItems.empty">
+        <div v-if="submenuItems.empty
+                  && submenuItems.undergrounds.length === 0
+                  && submenuItems.municipalities.length === 0"
+        >
           <span>{{submenuItems.empty.label}}</span>
         </div>
         <ul>
@@ -34,54 +40,37 @@
 
 <script lang="ts" setup>
   import {useCityStore} from "~/stores/cityStore";
-  const activeSub = ref(false)
-  const showSub = () => activeSub.value = true
-  const closeSub = () => activeSub.value = false
-
-  const { cityUndergrounds, findUndergrounds, currentCity } = useCityStore()
-
-
-
-  const foundUndergrounds = ref([])
-  foundUndergrounds.value=findUndergrounds('про', currentCity.id)
-
+  const { findUndergrounds, currentCity } = useCityStore()
 
   const emptySubmenuItem = {
     code: 'empty',
     label: 'Вы можете искать по метро или району...'
   }
-
-  const undergrounds = [
-    {
-      id: 1,
-      code: 'underground',
-      label: 'Пролетарская'
-    },
-    {
-      id: 1,
-      code: 'underground',
-      label: 'Кировский завод'
-    }
-  ]
-  const municipalities = [
-    {
-      id: 1,
-      code: 'municipality',
-      label: 'Кудрово'
-    },
-    {
-      id: 1,
-      code: 'underground',
-      label: 'Красносельский'
-    }
-  ]
-
+  const findString = ref('')
+  const activeSub = ref(false)
+  const foundUndergrounds = ref([])
   const submenuItems = ref({
     empty: emptySubmenuItem,
-    undergrounds: undergrounds,
-    municipalities: municipalities,
+    undergrounds: [],
+    municipalities: [],
   })
 
+  const showSub = () => activeSub.value = true
+  const closeSub = () => activeSub.value = false
+
+  const isGoing = ref(false);
+
+  const changeHelperFind = () => {
+    if (!isGoing.value) {
+      isGoing.value = true
+      setTimeout(() => {
+        foundUndergrounds.value = findUndergrounds(findString.value.toLowerCase(), currentCity.id)
+        isGoing.value = false
+        submenuItems.value.undergrounds = foundUndergrounds.value
+      }, 100)
+    }
+
+  }
 </script>
 
 <style scoped lang="scss">
