@@ -35,9 +35,10 @@ func (undergroundRepo *UndergroundRepo) ListByCity(cityId int) (error, []*valueo
 		underground := &valueobject.Underground{
 			Id:    0,
 			Label: "",
+			Slug:  "",
 		}
 
-		rows.Scan(&underground.Label, &underground.Id)
+		rows.Scan(&underground.Label, &underground.Id, &underground.Slug)
 
 		undergroundRepo.undergroundValueObjects = append(undergroundRepo.undergroundValueObjects, underground)
 	}

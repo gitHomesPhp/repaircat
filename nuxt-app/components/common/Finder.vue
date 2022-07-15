@@ -18,7 +18,7 @@
           <li v-if="submenuItems.undergrounds.length"
               v-for="underground in submenuItems.undergrounds"
               class="find-by"
-              @click=""
+              @click="goToUndergroundsScList(underground)"
           >
             <img src="/img/underground.svg" alt="">
             {{underground.label}}
@@ -26,7 +26,7 @@
           <li v-if="submenuItems.municipalities.length"
               v-for="municipality in submenuItems.municipalities"
               class="find-by"
-              @click=""
+              @click="goToMunicipalityScList(municipality)"
           >
             <img src="/img/municipality.png" alt="">
             {{municipality.label}}
@@ -40,9 +40,11 @@
 </template>
 
 <script lang="ts" setup>
-  import {useCityStore} from "~/stores/cityStore";
+  import { useCityStore } from "~/stores/cityStore";
   const { findUndergrounds, findMunicipalities, currentCity } = useCityStore()
 
+
+  const router = useRouter()
   const emptySubmenuItem = {
     code: 'empty',
     label: 'Вы можете искать по метро или району...'
@@ -58,7 +60,7 @@
   })
 
   const showSub = () => activeSub.value = true
-  const closeSub = () => activeSub.value = false
+  const closeSub = () => setTimeout(() => {activeSub.value = false}, 200)
 
   const isGoing = ref(false);
 
@@ -73,6 +75,14 @@
         isGoing.value = false
       }, 100)
     }
+  }
+
+  const goToUndergroundsScList = async (underground) => {
+    await router.push(`/${currentCity.code}/service-center/underground-${underground.slug}`)
+  }
+
+  const goToMunicipalityScList = async (municipality) => {
+    await router.push(`/${currentCity.code}/service-center/municipality-${municipality.id}`)
   }
 
   watch(() => findString.value, async () => {

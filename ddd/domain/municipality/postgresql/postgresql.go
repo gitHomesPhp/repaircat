@@ -32,9 +32,10 @@ func (municipalityRepo *MunicipalityRepo) ListByCity(cityId int) (error, []*valu
 		municipality := &valueobject.Municipality{
 			Id:    0,
 			Label: "",
+			Slug:  "",
 		}
 
-		rows.Scan(&municipality.Label, &municipality.Id)
+		rows.Scan(&municipality.Label, &municipality.Id, &municipality.Slug)
 
 		municipalityRepo.municipalityValueObjects = append(municipalityRepo.municipalityValueObjects, municipality)
 	}

@@ -3,7 +3,8 @@ package postgresql
 const GetMunicipalitiesByCityId = `
 SELECT
 	label,
-	id
+	id,
+	slug
 FROM municipalities
 WHERE city_id = $1
 `

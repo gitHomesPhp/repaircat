@@ -197,3 +197,10 @@ ALTER TABLE review
         FOREIGN KEY (sc_id)
         REFERENCES sc;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ALTER TABLE underground
+    ADD COLUMN IF NOT EXISTS slug VARCHAR (255) NOT NULL DEFAULT '';
+ALTER TABLE municipalities
+    ADD COLUMN IF NOT EXISTS slug VARCHAR (255) NOT NULL DEFAULT '';
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
