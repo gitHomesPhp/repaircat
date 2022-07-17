@@ -17,6 +17,13 @@ export const useScPaginatorStore = defineStore(
                 this.paginate = scList.pop()
                 this.scList = scList.pop()
             },
+            async fetchScListByUnderground(page, city, underground) {
+                const scList = await $fetch(
+                    `/api/sc-list/search-by-underground?page=${page}&underground=${underground}&city=${city}`
+                )
+                this.paginate = scList.pop()
+                this.scList = scList.pop()
+            }
         },
         getters: {
             nextPage: (state) => state.currentPage + 1,

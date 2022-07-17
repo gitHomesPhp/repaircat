@@ -1,18 +1,22 @@
 package searchservice
 
-import "github.com/gitHomesPhp/repaircat/ddd/aggregate"
+import (
+	"github.com/gitHomesPhp/repaircat/ddd/aggregate"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/scCard/postgresql"
+)
 
 type Search struct {
 	q                string
 	cityCode         string
 	undergroundSlug  string
 	municipalitySlug string
-	page             string
+	page             int
 
-	scCards []*aggregate.ScCard
+	scCards      []*aggregate.ScCard
+	nextPrevious map[string]bool
 }
 
-func CreateService(q, cityCode, undergroundSlug, municipalitySlug, page string) *Search {
+func CreateService(q, cityCode, undergroundSlug, municipalitySlug string, page int) *Search {
 	return &Search{
 		q:                q,
 		cityCode:         cityCode,
@@ -22,28 +26,36 @@ func CreateService(q, cityCode, undergroundSlug, municipalitySlug, page string) 
 	}
 }
 
-func (searchService *Search) GetScCards() []*aggregate.ScCard {
+func (searchService *Search) GetScCards() ([]*aggregate.ScCard, map[string]bool) {
 	if searchService.q != "" {
 		searchService.getScCardsByQuery()
 	}
 
 	if searchService.undergroundSlug != "" {
-		searchService.getScCardsByUnderground()
+		searchService.getScCardsByUnderground(searchService.page)
 	}
 
 	if searchService.municipalitySlug != "" {
 		searchService.getScCardsByMunicipality()
 	}
 
-	return searchService.scCards
+	return searchService.scCards, searchService.nextPrevious
 }
 
 func (searchService *Search) getScCardsByQuery() {
 
 }
 
-func (searchService *Search) getScCardsByUnderground() {
+func (searchService *Search) getScCardsByUnderground(page int) {
+	scCardRepo := postgresql.GetRepo()
 
+	_, scCards, nextPrevious := scCardRepo.ListByFields(page, map[string]string{
+		"underground.slug": searchService.undergroundSlug,
+		"city.code":        searchService.cityCode,
+	})
+
+	searchService.scCards = scCards
+	searchService.nextPrevious = nextPrevious
 }
 
 func (searchService *Search) getScCardsByMunicipality() {
