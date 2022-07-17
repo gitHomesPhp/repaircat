@@ -19,11 +19,12 @@ func NewScCard() *ScCard {
 	}
 
 	location := &entity.Location{
-		Address:      "",
-		Latitude:     "",
-		Longitude:    "",
-		Undergrounds: undergrounds,
-		City:         city,
+		Address:        "",
+		Latitude:       "",
+		Longitude:      "",
+		Undergrounds:   undergrounds,
+		City:           city,
+		Municipalities: []*valueobject.Municipality{},
 	}
 
 	sc := &entity.Sc{

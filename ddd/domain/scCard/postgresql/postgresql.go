@@ -102,6 +102,22 @@ func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.Sc
 		)
 	}
 
+	rows, _ = conn.Query(context.Background(), GetMunicipality, locationIds)
+
+	for rows.Next() {
+		var locId int
+		municipality := &valueobject.Municipality{
+			Label: "",
+		}
+
+		rows.Scan(&municipality.Label, &locId)
+
+		ScCardRepository.mapScCards[locationIdsMap[locId]].Sc.Location.Municipalities = append(
+			ScCardRepository.mapScCards[locationIdsMap[locId]].Sc.Location.Municipalities,
+			municipality,
+		)
+	}
+
 	from := ScCardRepository.scCards[0].Sc.Id
 	to := ScCardRepository.scCards[len(ScCardRepository.scCards)-1].Sc.Id
 

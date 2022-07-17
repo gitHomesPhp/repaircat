@@ -37,6 +37,17 @@
               {{ underground.label }}
             </span>
           </div>
+          <div v-if="location.undergrounds.length"
+               v-for="underground in location.undergrounds"
+               class="location__item"
+          >
+            <span class="location__image">
+              <img src="/img/underground_icon.png" alt="">
+            </span>
+            <span>
+              {{ underground.label }}
+            </span>
+          </div>
         </div>
         <div class="sc-card__contact contact">
           <div class="sc-card__email contact__item">

@@ -91,6 +91,16 @@ const GetUndergrounds = `
 	WHERE location_id = ANY ($1)
 `
 
+const GetMunicipality = `
+SELECT
+	municipalities.label,
+
+	location_id
+FROM municipalities
+	JOIN location_regions ON region_id = municipalities.id AND location_regions.region_type = 'municipality'
+WHERE location_id = ANY ($1)
+`
+
 const PreviousNextQuery = `
 SELECT
 	exists(
