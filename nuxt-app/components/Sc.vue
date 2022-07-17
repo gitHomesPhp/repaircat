@@ -37,7 +37,7 @@
     <div class="sc__address">
       <div>
         <div class="sc__location-address location-info">
-          <img src="~/assets/img/location_icon.png" alt="">
+          <img src="/img/location_icon.png" alt="">
           <span class="location-info__header">Аддрес:</span>
           <span class="location-info__value">{{ scCardExtension.sc.location.address }}</span>
         </div>
@@ -45,7 +45,7 @@
              v-for="underground in scCardExtension.sc.location.undergrounds"
              class="sc__location-address location-info"
         >
-          <img src="~/assets/img/underground_icon.png" alt="">
+          <img src="/img/underground_icon.png" alt="">
           <span class="location-info__header">Метро:</span>
           <span class="location-info__value">{{ underground.label }}</span>
         </div>
