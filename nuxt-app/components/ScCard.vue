@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div>
-      <img src="~/assets/img/gear_icon.png" alt="">
+      <img src="/img/gear_icon.png" alt="">
     </div>
     <div class="sc-card">
       <div class="sc-card__head">
@@ -20,7 +20,7 @@
         <div class="sc-card__location location">
           <div class="location__item">
             <span class="location__image">
-              <img src="~/assets/img/location_icon.png" alt="">
+              <img src="/img/location_icon.png" alt="">
             </span>
             <span>
               {{ location.address }}
@@ -31,7 +31,7 @@
                class="location__item"
           >
             <span class="location__image">
-              <img src="~/assets/img/underground_icon.png" alt="">
+              <img src="/img/underground_icon.png" alt="">
             </span>
             <span>
               {{ underground.label }}
@@ -41,7 +41,7 @@
         <div class="sc-card__contact contact">
           <div class="sc-card__email contact__item">
             <span class="contact__image">
-              <img src="~/assets/img/email_icon.png" alt="">
+              <img src="/img/email_icon.png" alt="">
             </span>
             <span>
               {{ email }}
@@ -49,7 +49,7 @@
           </div>
           <div class="sc-card__site contact__item">
           <span class="contact__image">
-            <img src="~/assets/img/site_icon.png" alt="">
+            <img src="/img/site_icon.png" alt="">
           </span>
           <span>
             <a @click.stop :href="site" target="_blank">{{ site }}</a>
@@ -57,7 +57,7 @@
           </div>
           <div class="sc-card__phone contact__item">
           <span class="contact__image">
-            <img src="~/assets/img/phone_icon.png" alt="">
+            <img src="/img/phone_icon.png" alt="">
           </span>
             <span>
             {{ phone }}
