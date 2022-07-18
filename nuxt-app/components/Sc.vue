@@ -1,72 +1,75 @@
 <template>
-  <div class="sc">
-    <div class="sc__header">
-      <div class="sc__title">
-        <div class="sc__type">
-          <span>{{ title }}</span>
+  <div>
+    <div class="sc card">
+      <div class="sc__header">
+        <div class="sc__title">
+          <div class="sc__type">
+            <span>{{ title }}</span>
+          </div>
+          <h1 class="sc__name">{{scCardExtension.sc.name}}</h1>
         </div>
-        <h1 class="sc__name">{{scCardExtension.sc.name}}</h1>
-      </div>
-      <div class="sc__contacts contacts">
-        <div class="contact__column contact__column--header">
-          <span>Телефон:</span>
-          <span>Почта:</span>
-          <span>Сайт:</span>
-        </div>
-        <div class="contact__column contact__column--value">
-          <span class="contact__item">{{scCardExtension.sc.phone || 'Нет информации'}}</span>
-          <span class="contact__item">{{scCardExtension.sc.email || 'Нет информации'}}</span>
-          <span class="contact__item">{{scCardExtension.sc.site || 'Нет информации'}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="sc__body">
-      <div class="sc__meta-info">
-        <CommonRating
-            :rating="scCardExtension.review_info.rating"
-            :count="scCardExtension.review_info.count"
-        />
-      </div>
-      <div class="sc__line"></div>
-      <div class="sc__main-info">
-        <div @click="toggleText" class="sc__description pointer" :class="{'hidden': isHidden}">
-          <div  v-html="scCardExtension.sc.description"></div>
+        <div class="sc__contacts contacts">
+          <div class="contact__column contact__column--header">
+            <span>Телефон:</span>
+            <span>Почта:</span>
+            <span>Сайт:</span>
+          </div>
+          <div class="contact__column contact__column--value">
+            <span class="contact__item">{{scCardExtension.sc.phone || 'Нет информации'}}</span>
+            <span class="contact__item">{{scCardExtension.sc.email || 'Нет информации'}}</span>
+            <span class="contact__item">{{scCardExtension.sc.site || 'Нет информации'}}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="sc__address">
-      <div>
-        <div class="sc__location-address location-info">
-          <img src="/img/location_icon.png" alt="">
-          <span class="location-info__header">Аддрес:</span>
-          <span class="location-info__value">{{ scCardExtension.sc.location.address }}</span>
+      <div class="sc__body">
+        <div class="sc__meta-info">
+          <CommonRating
+              :rating="scCardExtension.review_info.rating"
+              :count="scCardExtension.review_info.count"
+          />
         </div>
-        <div v-if="scCardExtension.sc.location.undergrounds.length"
-             v-for="underground in scCardExtension.sc.location.undergrounds"
-             class="sc__location-address location-info"
-        >
-          <img src="/img/underground_icon.png" alt="">
-          <span class="location-info__header">Метро:</span>
-          <span class="location-info__value">{{ underground.label }}</span>
+        <div class="sc__line"></div>
+        <div class="sc__main-info">
+          <div @click="toggleText" class="sc__description pointer" :class="{'hidden': isHidden}">
+            <div  v-html="scCardExtension.sc.description"></div>
+          </div>
         </div>
       </div>
-      <div class="sc__map">
-        <client-only>
-          <yandex-map
-              v-if="showMap"
-              :coords="coords"
-              zoom=16
-              @click="changeCoords"
+      <div class="sc__address">
+        <div>
+          <div class="sc__location-address location-info">
+            <img src="/img/location_icon.png" alt="">
+            <span class="location-info__header">Аддрес:</span>
+            <span class="location-info__value">{{ scCardExtension.sc.location.address }}</span>
+          </div>
+          <div v-if="scCardExtension.sc.location.undergrounds.length"
+               v-for="underground in scCardExtension.sc.location.undergrounds"
+               class="sc__location-address location-info"
           >
-            <ymap-marker
+            <img src="/img/underground_icon.png" alt="">
+            <span class="location-info__header">Метро:</span>
+            <span class="location-info__value">{{ underground.label }}</span>
+          </div>
+        </div>
+        <div class="sc__map">
+          <client-only>
+            <yandex-map
+                v-if="showMap"
                 :coords="coords"
-                marker-id="123123"
-                hint-content="some hint"
-            />
-          </yandex-map>
-        </client-only>
+                zoom=16
+                @click="changeCoords"
+            >
+              <ymap-marker
+                  :coords="coords"
+                  marker-id="123123"
+                  hint-content="some hint"
+              />
+            </yandex-map>
+          </client-only>
+        </div>
       </div>
     </div>
+    <div class="card"></div>
   </div>
 </template>
 
@@ -93,11 +96,7 @@
   .sc {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    -webkit-box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
-    box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
-    border-radius: 5px;
-    padding: 1rem;
+    margin-bottom: 1rem;
     &__header {
       display: flex;
       justify-content: space-between;
