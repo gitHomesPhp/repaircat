@@ -82,7 +82,7 @@
   }
 
   const goToMunicipalityScList = async (municipality) => {
-    await router.push(`/${currentCity.code}/service-center/municipality-${municipality.id}`)
+    await router.push(`/${currentCity.code}/service-center/municipality-${municipality.slug}`)
   }
 
   watch(() => findString.value, async () => {
