@@ -93,6 +93,11 @@
   .sc {
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
+    box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
+    border-radius: 5px;
+    padding: 1rem;
     &__header {
       display: flex;
       justify-content: space-between;

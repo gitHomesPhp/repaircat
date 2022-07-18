@@ -42,10 +42,10 @@ WHERE underground.slug = $1 AND city.code = $2
 const FindLocationIdsByMunicipalitySlug = `
 SELECT
 	location_id
-FROM municipality
-	JOIN location_regions ON municipality.id = location_regions.region_id and region_type = 'municipality'
-	JOIN city ON city.id = municipality.city_id
-WHERE municipality.slug = $1 AND city.code = $2
+FROM municipalities
+	JOIN location_regions ON municipalities.id = location_regions.region_id and region_type = 'municipality'
+	JOIN city ON city.id = municipalities.city_id
+WHERE municipalities.slug = $1 AND city.code = $2
 `
 
 const GetScCardListByLocationIds = `

@@ -28,7 +28,7 @@
           </div>
           <div v-if="location.undergrounds.length"
                v-for="underground in location.undergrounds"
-               class="location__item"
+               class="location__item find"
           >
             <span class="location__image">
               <img src="/img/underground_icon.png" alt="">
@@ -37,15 +37,15 @@
               {{ underground.label }}
             </span>
           </div>
-          <div v-if="location.undergrounds.length"
-               v-for="underground in location.undergrounds"
-               class="location__item"
+          <div v-if="location.municipalities.length"
+               v-for="municipality in location.municipalities"
+               class="location__item find"
           >
             <span class="location__image">
-              <img src="/img/underground_icon.png" alt="">
+              <img src="/img/municipality.png" alt="">
             </span>
             <span>
-              {{ underground.label }}
+              {{ municipality.label }}
             </span>
           </div>
         </div>
@@ -175,6 +175,10 @@
       flex-direction: column;
       //justify-content: space-between;
       align-items: flex-end;
+      @media(max-width: 510px) {
+        align-items: flex-start;
+        margin-top: .5rem;
+      }
     }
     &__email {
       display: flex;
@@ -229,6 +233,11 @@
       margin-top: 3px;
       font-size: .9rem;
       text-decoration: underline;
+      color: #6c757d;
+    }
+  }
+  .find {
+    &:hover {
       color: #6c757d;
     }
   }

@@ -104,24 +104,25 @@ func (ScCardRepository *ScCardRepository) ListByFields(page int, fields map[stri
 		return err, nil, nil
 	}
 
+	var rows pgx.Rows
 	sqlQuery := ""
 	_, exists := fields["underground.slug"]
 
 	if exists {
 		sqlQuery = FindLocationIdsByUndergroundSlug
+		rows, _ = conn.Query(context.Background(), sqlQuery, fields["underground.slug"], fields["city.code"])
 	}
 
 	_, exists = fields["municipality.slug"]
 
 	if exists {
 		sqlQuery = FindLocationIdsByMunicipalitySlug
+		rows, _ = conn.Query(context.Background(), sqlQuery, fields["municipality.slug"], fields["city.code"])
 	}
 
 	if sqlQuery == "" {
 		return errors.New("no fields"), nil, nil
 	}
-
-	rows, _ := conn.Query(context.Background(), sqlQuery, fields["underground.slug"], fields["city.code"])
 
 	var findLocationIds []int
 

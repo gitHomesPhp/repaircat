@@ -36,7 +36,7 @@ func (searchService *Search) GetScCards() ([]*aggregate.ScCard, map[string]bool)
 	}
 
 	if searchService.municipalitySlug != "" {
-		searchService.getScCardsByMunicipality()
+		searchService.getScCardsByMunicipality(searchService.page)
 	}
 
 	return searchService.scCards, searchService.nextPrevious
@@ -58,6 +58,14 @@ func (searchService *Search) getScCardsByUnderground(page int) {
 	searchService.nextPrevious = nextPrevious
 }
 
-func (searchService *Search) getScCardsByMunicipality() {
+func (searchService *Search) getScCardsByMunicipality(page int) {
+	scCardRepo := postgresql.GetRepo()
 
+	_, scCards, nextPrevious := scCardRepo.ListByFields(page, map[string]string{
+		"municipality.slug": searchService.municipalitySlug,
+		"city.code":         searchService.cityCode,
+	})
+
+	searchService.scCards = scCards
+	searchService.nextPrevious = nextPrevious
 }

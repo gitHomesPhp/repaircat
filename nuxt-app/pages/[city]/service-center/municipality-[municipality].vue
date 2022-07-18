@@ -2,13 +2,20 @@
   <div class="container">
     <AppHead/>
     <AppBody>
-      {{route.params}}
+      <CommonFinder />
+      <Paginator type="top"/>
+      <ScList />
+      <Paginator type="bottom"/>
     </AppBody>
     <AppFoot/>
   </div>
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: "paginate-after-find-sc-by-municipality"
+})
+
 const route = useRoute()
 
 </script>

@@ -23,6 +23,13 @@ export const useScPaginatorStore = defineStore(
                 )
                 this.paginate = scList.pop()
                 this.scList = scList.pop()
+            },
+            async fetchScListByMunicipality(page, city, municipality) {
+                const scList = await $fetch(
+                    `/api/sc-list/search-by-municipality?page=${page}&municipality=${municipality}&city=${city}`
+                )
+                this.paginate = scList.pop()
+                this.scList = scList.pop()
             }
         },
         getters: {
