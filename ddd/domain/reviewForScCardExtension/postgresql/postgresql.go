@@ -32,9 +32,15 @@ func (repo *ReviewForScCardExtensionRepository) ListBySc(page int, scId int) (er
 
 	for rows.Next() {
 		review := aggregate.NewReviewForScCardExtension()
-		var visitorId int
 
-		rows.Scan(&review.Review.Id, &review.Review.Text, &review.Review.Rating, &visitorId)
+		rows.Scan(
+			&review.Review.Id,
+			&review.Review.Text,
+			&review.Review.Rating,
+			&review.Visitor.Id,
+			&review.Visitor.Source,
+			&review.Visitor.Name,
+		)
 
 		repo.Reviews = append(repo.Reviews, review)
 	}

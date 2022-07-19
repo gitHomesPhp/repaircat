@@ -6,8 +6,8 @@ import (
 )
 
 type ReviewForScCardExtension struct {
-	Review  *entity.ReviewExternal
-	Visitor *valueobject.ExternalVisitor
+	Review  *entity.ReviewExternal       `json:"review"`
+	Visitor *valueobject.ExternalVisitor `json:"visitor"`
 }
 
 func NewReviewForScCardExtension() *ReviewForScCardExtension {
@@ -22,6 +22,7 @@ func NewReviewForScCardExtension() *ReviewForScCardExtension {
 	visitor := &valueobject.ExternalVisitor{
 		Id:     0,
 		Source: "",
+		Name:   "",
 	}
 
 	return &ReviewForScCardExtension{

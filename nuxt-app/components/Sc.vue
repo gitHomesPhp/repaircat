@@ -66,7 +66,13 @@
     <div class="card reviews" id="reviews">
       <h3 class="reviews__header">Отзывы о &#171{{scCardExtension.sc.name}}&#187</h3>
       <div class="reviews__elements">
-        <button>Показать отзывы</button>
+        <CommonReview
+            v-if="reviewStore.reviews.length"
+            v-for="review in reviewStore.reviews"
+            :text="review.review.text"
+            :visitor="review.visitor"
+        />
+        <button @click="showReviews">Показать отзывы</button>
       </div>
     </div>
     <div class="card about" id="information">
@@ -77,6 +83,9 @@
 </template>
 
 <script setup lang="ts">
+  import {useReviewStore} from "~/stores/reviewStore";
+
+  const reviewStore = useReviewStore()
   const route = useRoute()
 
   const title = ref('Сервисный центр')
@@ -86,6 +95,13 @@
   const coords = ref([scCardExtension.value.sc.location.latitude, scCardExtension.value.sc.location.longitude])
   const changeCoords = (e) => {
     coords.value =  e.get('coords');
+  }
+
+  const reviewPage = ref(1)
+
+  const showReviews = () => {
+    reviewStore.getReviews(reviewPage.value, scCardExtension.value.sc.id)
+    reviewPage.value++
   }
   onMounted(() => {
     setTimeout(() => {showMap.value = true}, 150)
@@ -219,6 +235,8 @@
     }
     &__elements {
       font-size: 1rem;
+      display: flex;
+      flex-direction: column;
     }
   }
   .about {
@@ -238,5 +256,4 @@
       font-size: 1rem;
     }
   }
-
 </style>
