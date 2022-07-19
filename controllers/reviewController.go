@@ -2,19 +2,17 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gitHomesPhp/repaircat/service"
+	"github.com/gitHomesPhp/repaircat/ddd/domain/reviewForScCardExtension/postgresql"
 	"net/http"
 	"strconv"
 )
 
-func AddReview(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": false,
-	})
-}
+func GetScReviews(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	page, _ := strconv.Atoi(ctx.Query("page"))
+	repo := postgresql.GetRepo()
 
-func GetReviewsInfo(ctx *gin.Context) {
-	scId, _ := strconv.Atoi(ctx.Param("id"))
+	_, reviews, _ := repo.ListBySc(page, id)
 
-	ctx.JSON(http.StatusOK, service.GetScReviewsInfo(scId))
+	ctx.JSON(http.StatusOK, reviews)
 }

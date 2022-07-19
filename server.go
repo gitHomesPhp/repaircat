@@ -15,6 +15,7 @@ func main() {
 	route.GET("/sc-list/search", controllers.MainSearch)
 	route.POST("/sc", controllers.AddSc)
 	route.GET("/sc/:id", controllers.GetSc)
+	route.GET("/sc/:id/review", controllers.GetScReviews)
 
 	route.GET("/cities", controllers.CityList)
 
@@ -22,9 +23,6 @@ func main() {
 	route.GET("/city/:id/underground", controllers.GetUndergroundByCity)
 	route.GET("/city/:id/municipality", controllers.GetMunicipalityByCity)
 	route.POST("/city", controllers.AddCity)
-
-	route.POST("/sc/:id/review", controllers.AddReview)
-	route.GET("/sc/:id/reviews-info", controllers.GetReviewsInfo)
 
 	///////////////////////////////////////////////////////
 	route.Run()

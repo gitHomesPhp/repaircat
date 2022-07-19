@@ -28,12 +28,6 @@
               :count="scCardExtension.review_info.count"
           />
         </div>
-        <div class="sc__line"></div>
-        <div class="sc__main-info">
-          <div @click="toggleText" class="sc__description pointer" :class="{'hidden': isHidden}">
-            <div  v-html="scCardExtension.sc.description"></div>
-          </div>
-        </div>
       </div>
       <div class="sc__address">
         <div>
@@ -69,7 +63,16 @@
         </div>
       </div>
     </div>
-    <div class="card"></div>
+    <div class="card reviews" id="reviews">
+      <h3 class="reviews__header">Отзывы о &#171{{scCardExtension.sc.name}}&#187</h3>
+      <div class="reviews__elements">
+        <button>Показать отзывы</button>
+      </div>
+    </div>
+    <div class="card about" id="information">
+      <h3 class="about__header">Информация о сервисном центре</h3>
+      <div class="about__description" v-html="scCardExtension.sc.description"></div>
+    </div>
   </div>
 </template>
 
@@ -78,8 +81,6 @@
 
   const title = ref('Сервисный центр')
   const { data: scCardExtension} = await useFetch(`/api/sc/${route.params.id}`)
-  const isHidden = ref(true)
-  const toggleText = () => {isHidden.value = !isHidden.value}
   const showMap  = ref(false)
 
   const coords = ref([scCardExtension.value.sc.location.latitude, scCardExtension.value.sc.location.longitude])
@@ -133,19 +134,6 @@
       justify-content: space-around;
       @media (max-width: 510px) {
         flex-direction: column-reverse;
-      }
-    }
-    &__main-info {
-      display: flex;
-      flex-direction: column;
-      max-width: 66%;
-      color: #5a5c61;
-      font-family: Roboto,Arial,sans-serif;
-      font-size: 1rem;;
-      padding-top: .5rem;
-      padding-bottom: .5rem;
-      @media (max-width: 510px) {
-        max-width: 100%;
       }
     }
     &__line {
@@ -222,4 +210,33 @@
 
     }
   }
+  .reviews {
+    margin-bottom: 1rem;
+    &__header {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: #0070c0;
+    }
+    &__elements {
+      font-size: 1rem;
+    }
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+    color: #5a5c61;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 1rem;;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    &__header {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      color: #0070c0;
+    }
+    &__description {
+      font-size: 1rem;
+    }
+  }
+
 </style>
