@@ -3,17 +3,20 @@
     <div class="review__visitor">
       <span class="review__visitor-name">{{ visitor.name }}</span>
       <img src="/img/2gis_icon.svg" width="50" alt="">
+      <CommonRating :rating="rating" :count="1" stars-only />
     </div>
     <div class="review__info">
-      {{ text }}
+      <div>{{ text }}</div>
     </div>
+
   </div>
 </template>
 
 <script lang="ts" setup>
   const props = defineProps({
     text: { required: true, type: String },
-    visitor: { required: true, type: Object }
+    visitor: { required: true, type: Object },
+    rating: { required: true, type: Number },
   })
 </script>
 
@@ -35,11 +38,16 @@
     padding-right: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 20%;
+    width: 135px;
+    img {
+      margin-bottom: .6rem;
+    }
   }
   &__info {
-    width: 80%;
+    font-family: Roboto,Arial,sans-serif;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
   }
   &__visitor-name {
     font-weight: bolder;

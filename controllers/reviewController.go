@@ -9,10 +9,9 @@ import (
 
 func GetScReviews(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	page, _ := strconv.Atoi(ctx.Query("page"))
 	repo := postgresql.GetRepo()
 
-	_, reviews, _ := repo.ListBySc(page, id)
+	_, reviews, _ := repo.ListBySc(id)
 
 	ctx.JSON(http.StatusOK, reviews)
 }

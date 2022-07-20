@@ -3,7 +3,7 @@
     <div class="rating__star">
       <div class="rating__fill" :style="'width:' + ratingFill + '%'"></div>
     </div>
-    <div class="rating__count">
+    <div v-if="!starsOnly" class="rating__count">
       <span>{{ props.count}} отзывов</span>
     </div>
   </div>
@@ -12,7 +12,8 @@
 <script lang="ts" setup>
   const props = defineProps({
     count: { type: Number, required: true },
-    rating: {type: Number, required: true}
+    rating: { type: Number, required: true },
+    starsOnly: { type: Boolean, default: false },
   })
 
   const ratingFill  = 100 * props.rating / 5

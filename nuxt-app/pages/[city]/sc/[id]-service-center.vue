@@ -9,7 +9,10 @@
 </template>
 
 <script lang="ts" setup>
-  const route = useRoute();
+definePageMeta({
+  middleware: 'review'
+})
+const route = useRoute();
 
 </script>
 

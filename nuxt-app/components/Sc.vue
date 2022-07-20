@@ -68,8 +68,11 @@
       <div class="reviews__elements">
         <CommonReview
             v-if="reviewStore.reviews.length"
-            v-for="review in reviewStore.reviews"
+            v-for="(review, index) in reviewStore.reviews"
+            v-show="index < countShowingReviews"
+            :key="index"
             :text="review.review.text"
+            :rating="review.review.rating"
             :visitor="review.visitor"
         />
         <button @click="showReviews">Показать отзывы</button>
@@ -83,30 +86,30 @@
 </template>
 
 <script setup lang="ts">
-  import {useReviewStore} from "~/stores/reviewStore";
 
-  const reviewStore = useReviewStore()
-  const route = useRoute()
+import {useReviewStore} from "~/stores/reviewStore";
 
-  const title = ref('Сервисный центр')
-  const { data: scCardExtension} = await useFetch(`/api/sc/${route.params.id}`)
-  const showMap  = ref(false)
+const reviewStore = useReviewStore()
+const route = useRoute()
 
-  const coords = ref([scCardExtension.value.sc.location.latitude, scCardExtension.value.sc.location.longitude])
-  const changeCoords = (e) => {
-    coords.value =  e.get('coords');
-  }
+const title = ref('Сервисный центр')
+const { data: scCardExtension} = await useFetch(`/api/sc/${route.params.id}`)
+const showMap  = ref(false)
 
-  const reviewPage = ref(1)
+const coords = ref([scCardExtension.value.sc.location.latitude, scCardExtension.value.sc.location.longitude])
+const changeCoords = (e) => {
+  coords.value =  e.get('coords');
+}
 
-  const showReviews = () => {
-    reviewStore.getReviews(reviewPage.value, scCardExtension.value.sc.id)
-    reviewPage.value++
-  }
-  onMounted(() => {
-    setTimeout(() => {showMap.value = true}, 150)
+const countShowingReviews = ref(10)
 
-  })
+const showReviews = () => {
+  countShowingReviews.value += 10
+}
+onMounted(() => {
+  setTimeout(() => {showMap.value = true}, 150)
+
+})
 </script>
 
 <style scoped lang="scss">

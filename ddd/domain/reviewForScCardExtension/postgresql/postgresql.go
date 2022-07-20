@@ -18,9 +18,7 @@ func GetRepo() *ReviewForScCardExtensionRepository {
 	}
 }
 
-func (repo *ReviewForScCardExtensionRepository) ListBySc(page int, scId int) (error, []*aggregate.ReviewForScCardExtension, map[string]bool) {
-	const COUNT = 10
-
+func (repo *ReviewForScCardExtensionRepository) ListBySc(scId int) (error, []*aggregate.ReviewForScCardExtension, map[string]bool) {
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 
 	if err != nil {
@@ -28,7 +26,7 @@ func (repo *ReviewForScCardExtensionRepository) ListBySc(page int, scId int) (er
 		return err, nil, nil
 	}
 
-	rows, _ := conn.Query(context.Background(), SelectScReviewsExternalByCursor, scId, COUNT, COUNT*page-COUNT)
+	rows, _ := conn.Query(context.Background(), SelectScReviewsExternalByCursor, scId)
 
 	for rows.Next() {
 		review := aggregate.NewReviewForScCardExtension()

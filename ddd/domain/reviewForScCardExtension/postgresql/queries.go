@@ -12,7 +12,4 @@ SELECT
 	'Клиент' as name
 FROM review_external
 WHERE sc_id = $1
-ORDER BY id
-LIMIT $2
-OFFSET $3
 `

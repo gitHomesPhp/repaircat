@@ -7,9 +7,8 @@ export const useReviewStore = defineStore(
             reviews: []
         }),
         actions: {
-            async getReviews(page: number, scId: number) {
-                const data = await $fetch(`/api/sc/review?scId=${scId}&page=${page}`)
-                this.reviews = this.reviews.concat(data)
+            async getReviews(scId: number) {
+                this.reviews = await $fetch(`/api/sc/review?scId=${scId}`)
             }
         }
     }
