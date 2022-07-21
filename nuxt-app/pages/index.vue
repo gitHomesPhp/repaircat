@@ -4,9 +4,9 @@
     <AppBody>
       <div>
         <CommonFinder />
-        <Paginator type="top"/>
+        <!--Paginator type="top"/>
         <ScList />
-        <Paginator type="bottom"/>
+        <Paginator type="bottom"/-->
       </div>
     </AppBody>
     <AppFoot />

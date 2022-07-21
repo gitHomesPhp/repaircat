@@ -28,6 +28,9 @@
               :count="scCardExtension.review_info.count"
           />
         </div>
+        <div class="sc__add-review">
+          <button @click="showReviews">Оставить отзыв</button>
+        </div>
       </div>
       <div class="sc__address">
         <div>
@@ -151,8 +154,14 @@ onMounted(() => {
       border-top: #cccccc 1px solid;
       border-bottom: #cccccc 1px solid;
       justify-content: space-around;
+      align-items: center;
       @media (max-width: 510px) {
         flex-direction: column-reverse;
+      }
+    }
+    &__add-review {
+      @media (max-width: 510px) {
+        padding-top: .4rem;
       }
     }
     &__line {

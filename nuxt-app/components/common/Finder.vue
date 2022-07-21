@@ -1,5 +1,5 @@
 <template>
-  <div class="finder">
+  <form @submit.prevent="goToSearchScList" class="finder">
     <div class="finder__main-search">
       <input @focus="showSub"
              @blur="closeSub"
@@ -36,7 +36,7 @@
     </div>
 
     <button>НАЙТИ</button>
-  </div>
+  </form>
 </template>
 
 <script lang="ts" setup>
@@ -83,6 +83,10 @@
 
   const goToMunicipalityScList = async (municipality) => {
     await router.push(`/${currentCity.code}/service-center/municipality-${municipality.slug}`)
+  }
+
+  const goToSearchScList = async () => {
+    await router.push(`/${currentCity.code}/service-center?q=${findString.value}`)
   }
 
   watch(() => findString.value, async () => {

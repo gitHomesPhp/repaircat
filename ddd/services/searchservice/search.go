@@ -43,7 +43,12 @@ func (searchService *Search) GetScCards() ([]*aggregate.ScCard, map[string]bool)
 }
 
 func (searchService *Search) getScCardsByQuery() {
+	scCardRepo := postgresql.GetRepo()
 
+	_, scCards, nextPrevious := scCardRepo.Search(searchService.page, searchService.cityCode, searchService.q)
+
+	searchService.scCards = scCards
+	searchService.nextPrevious = nextPrevious
 }
 
 func (searchService *Search) getScCardsByUnderground(page int) {

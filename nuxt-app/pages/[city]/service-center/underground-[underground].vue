@@ -3,9 +3,9 @@
     <AppHead/>
     <AppBody>
       <CommonFinder />
-      <Paginator type="top"/>
+      <Paginator v-if="scList.length" type="top"/>
       <ScList />
-      <Paginator type="bottom"/>
+      <Paginator v-if="scList.length" type="bottom"/>
     </AppBody>
     <AppFoot/>
   </div>
@@ -16,8 +16,9 @@ definePageMeta({
   middleware: "paginate-after-find-sc-by-underground"
 })
 
-const route = useRoute()
 
+import {useScPaginatorStore} from "~/stores/scPaginatorStore";
+const { scList } = useScPaginatorStore()
 </script>
 
 <style scoped lang="scss">

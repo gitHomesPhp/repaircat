@@ -24,10 +24,13 @@ OFFSET $2
 
 const FindLocationIds = `
 SELECT
-	id
-FROM underground
-	JOIN location_regions ON underground.id = location_regions.region_id and region_type = 'underground'
-WHERE label ILIKE $1 || '%'
+	location_id
+FROM location_regions
+	LEFT JOIN underground ON region_id = underground.id AND region_type = 'underground'
+	LEFT JOIN municipalities ON region_id = municipalities.id AND region_type = 'municipality'
+	LEFT JOIN city ON city.id = underground.city_id OR municipalities.city_id = city.id
+WHERE (underground.label ILIKE $1 || '%' OR municipalities.label ILIKE $1 || '%')
+	AND city.code = $2
 `
 
 const FindLocationIdsByUndergroundSlug = `
@@ -111,7 +114,7 @@ SELECT
 	) as next
 `
 
-const PreviousNextQueryByUnderground = `
+const PreviousNextQueryByLocations = `
 SELECT
 	EXISTS (
 		SELECT

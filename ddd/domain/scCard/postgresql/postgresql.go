@@ -61,7 +61,7 @@ func (ScCardRepository *ScCardRepository) List(page int) (error, []*aggregate.Sc
 	}
 }
 
-func (ScCardRepository *ScCardRepository) Search(page int, query string) (error, []*aggregate.ScCard, map[string]bool) {
+func (ScCardRepository *ScCardRepository) Search(page int, city, query string) (error, []*aggregate.ScCard, map[string]bool) {
 	const COUNT = 10
 
 	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
@@ -71,19 +71,35 @@ func (ScCardRepository *ScCardRepository) Search(page int, query string) (error,
 		return err, nil, nil
 	}
 
-	var locationIds []int
+	rows, _ := conn.Query(context.Background(), FindLocationIds, query, city)
 
-	rows, _ := conn.Query(context.Background(), FindLocationIds, query)
+	var findLocationIds []int
 
 	for rows.Next() {
 		var locationId int
 		rows.Scan(&locationId)
 
-		locationIds = append(locationIds, locationId)
+		findLocationIds = append(findLocationIds, locationId)
 	}
 
-	previous := true
-	next := false
+	fmt.Println(findLocationIds)
+
+	rows, _ = conn.Query(context.Background(), GetScCardListByLocationIds, findLocationIds, COUNT, COUNT*page-COUNT)
+	scIds, locationIds, locationIdsMap := ScCardRepository.buildScCard(rows)
+
+	rows, _ = conn.Query(context.Background(), GetScCardInfo, scIds)
+	ScCardRepository.addReviewInfoToScCards(rows)
+
+	rows, _ = conn.Query(context.Background(), GetUndergrounds, locationIds)
+	ScCardRepository.addUndergroundsToScCards(rows, locationIdsMap)
+
+	rows, _ = conn.Query(context.Background(), GetMunicipality, locationIds)
+	ScCardRepository.addMunicipalitiesToScCards(rows, locationIdsMap)
+
+	var previous bool
+	var next bool
+
+	conn.QueryRow(context.Background(), PreviousNextQueryByLocations, locationIds, COUNT*page-COUNT, COUNT*page+COUNT).Scan(&previous, &next)
 
 	defer conn.Close(context.Background())
 
@@ -93,7 +109,6 @@ func (ScCardRepository *ScCardRepository) Search(page int, query string) (error,
 	}
 }
 
-// ListByFields TODO распилисть это
 func (ScCardRepository *ScCardRepository) ListByFields(page int, fields map[string]string) (error, []*aggregate.ScCard, map[string]bool) {
 	const COUNT = 10
 
@@ -148,7 +163,7 @@ func (ScCardRepository *ScCardRepository) ListByFields(page int, fields map[stri
 	var previous bool
 	var next bool
 
-	conn.QueryRow(context.Background(), PreviousNextQueryByUnderground, locationIds, COUNT*page-COUNT, COUNT*page+COUNT).Scan(&previous, &next)
+	conn.QueryRow(context.Background(), PreviousNextQueryByLocations, locationIds, COUNT*page-COUNT, COUNT*page+COUNT).Scan(&previous, &next)
 
 	defer conn.Close(context.Background())
 
