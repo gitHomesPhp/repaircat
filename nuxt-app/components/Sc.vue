@@ -39,7 +39,7 @@
             <span class="location-info__header">Аддрес:</span>
             <span class="location-info__value">{{ scCardExtension.sc.location.address }}</span>
           </div>
-          <div v-if="scCardExtension.sc.location.undergrounds.length"
+          <div v-if="scCardExtension.sc.location.undergrounds && scCardExtension.sc.location.undergrounds.length"
                v-for="underground in scCardExtension.sc.location.undergrounds"
                class="sc__location-address location-info"
           >
