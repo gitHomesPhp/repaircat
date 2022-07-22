@@ -57,6 +57,20 @@ func (scCardExtensionRepo *ScCardExtensionRepo) Get(id int) (error, *aggregate.S
 		scCardExtension.Sc.Location.Undergrounds = append(scCardExtension.Sc.Location.Undergrounds, underground)
 	}
 
+	rows, _ = conn.Query(context.Background(), GetMunicipalities, locationId)
+
+	for rows.Next() {
+		municipality := &valueobject.Municipality{
+			Id:    0,
+			Label: "",
+			Slug:  "",
+		}
+
+		rows.Scan(&municipality.Label)
+
+		scCardExtension.Sc.Location.Municipalities = append(scCardExtension.Sc.Location.Municipalities, municipality)
+	}
+
 	reviewInfo := &valueobject.ReviewInfo{
 		Count:  0,
 		Rating: 0,

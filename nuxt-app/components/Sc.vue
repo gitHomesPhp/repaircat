@@ -47,6 +47,14 @@
             <span class="location-info__header">Метро:</span>
             <span class="location-info__value">{{ underground.label }}</span>
           </div>
+          <div v-if="scCardExtension.sc.location.municipalities && scCardExtension.sc.location.municipalities.length"
+               v-for="municipality in scCardExtension.sc.location.municipalities"
+               class="sc__location-address location-info"
+          >
+            <img src="/img/municipality.png" alt="">
+            <span class="location-info__header">Метро:</span>
+            <span class="location-info__value">{{ municipality.label }}</span>
+          </div>
         </div>
         <div class="sc__map">
           <client-only>

@@ -26,6 +26,13 @@ FROM underground LEFT JOIN location_regions ON region_id = underground.id AND lo
 WHERE location_id = $1
 `
 
+const GetMunicipalities = `
+SELECT
+	municipalities.label
+FROM municipalities LEFT JOIN location_regions ON region_id = municipalities.id AND location_regions.region_type = 'municipality'
+WHERE location_id = $1
+`
+
 const GetReviewInfo = `
 SELECT
     count(sc_id) as count,
