@@ -27,7 +27,6 @@ const { currentCity } = storeToRefs(useCityStore())
   .header {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
     position: sticky;
     top: 0;
     z-index: 999;

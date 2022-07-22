@@ -13,7 +13,6 @@
 
 <style scoped lang="scss">
 .footer {
-  margin-top: 1rem;
   background-color: #fafafa;
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;

@@ -3,7 +3,7 @@
     <div class="paginator__wrapper">
       <span>
         <NuxtLink v-if="canPreviousPage"
-                  :to="`/?page=${previousPage}`"
+                  :to="`?page=${previousPage}`"
                   class="pointer"
         >
           Предыдущая
@@ -12,7 +12,7 @@
       <span class="paginator__page">{{ currentPage }}</span>
       <span>
         <NuxtLink v-if="canNextPage"
-                  :to="`/?page=${nextPage}`"
+                  :to="`?page=${nextPage}`"
                   class="pointer"
         >
           Следующая

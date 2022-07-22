@@ -26,7 +26,7 @@
               {{ location.address }}
             </span>
           </div>
-          <div v-if="location.undergrounds.length"
+          <div v-if="location.undergrounds && location.undergrounds.length"
                v-for="underground in location.undergrounds"
                class="location__item find"
           >
